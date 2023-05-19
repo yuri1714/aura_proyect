@@ -22,8 +22,10 @@ export class EditProfileComponent implements OnInit{
               private router: Router){}
 
   ngOnInit(): void {
+    //Save the session in the Local storage
     this.actual_user = JSON.parse(localStorage.getItem('actualUser') || '[]');
-
+    
+    //validators:
     this.editForm = new FormGroup({
       name: new FormControl(this.actual_user.name, [
         Validators.required,
@@ -42,17 +44,19 @@ export class EditProfileComponent implements OnInit{
       img: new FormControl('', []),
     });
 
-    
   }
-
+  // When you click on the Edit button:
   submit(){
+    // Here we are creating the FormData variable
     const formData = new FormData();
+    // We add the fields to the new variable 
     formData.append('id', this.actual_user.id);
     formData.append('name', this.editForm.value.name!);
     formData.append('lastname', this.editForm.value.lastname!);
     formData.append('password', this.editForm.value.password!);
     formData.append('img', this.selectedFile!);
 
+    // And we send it to the server to be changed in the database
     this.userService.updateUser(formData).subscribe((response) => {
       console.log(response);
       const user_updated = JSON.parse(localStorage.getItem('actualUser') || '[]');

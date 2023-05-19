@@ -10,22 +10,25 @@
           <input type="title" name="title" id="title" formControlName="title"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
             required="">
-          <span class="text-red-600" *ngIf="this.formProduct.get('title')?.errors?.['required'] && this.formProduct.get('title')?.touched">
+          <span class="text-red-600"
+            *ngIf="this.formProduct.get('title')?.errors?.['required'] && this.formProduct.get('title')?.touched">
             The title can not be void
           </span>
-          <span class="text-red-600" *ngIf="this.formProduct.get('title')?.errors?.['maxlength'] && this.formProduct.get('title')?.touched">
+          <span class="text-red-600"
+            *ngIf="this.formProduct.get('title')?.errors?.['maxlength'] && this.formProduct.get('title')?.touched">
             50 caracters limit exceeded
           </span>
         </div>
         <div>
           <label for="img" class="block mb-2 text-sm font-medium text-gray-900">Product image:</label>
           <input type="file" name="img" id="img" formControlName="img" (change)="onFileSelected($event)">
-          <span class="text-red-600" *ngIf="this.formProduct.get('img')?.errors?.['required'] && this.formProduct.get('img')?.touched">
+          <span class="text-red-600"
+            *ngIf="this.formProduct.get('img')?.errors?.['required'] && this.formProduct.get('img')?.touched">
             Image is required for the product.
           </span>
           <span class="text-red-600" *ngIf="this.validateImgSize">
             The image size can not be more than 2Mb.
-        </span>
+          </span>
           <span class="text-red-600" *ngIf="this.validateImgExt">
             The image only supports 'jpeg', 'jpg' and 'png'.
           </span>
@@ -34,7 +37,8 @@
           <label for="price" class="block mb-2 text-sm font-medium text-gray-900">Price</label>
           <input type="number" formControlName="price"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-          <span class="text-red-600" *ngIf="this.formProduct.get('price')?.errors?.['required'] && this.formProduct.get('price')?.touched">
+          <span class="text-red-600"
+            *ngIf="this.formProduct.get('price')?.errors?.['required'] && this.formProduct.get('price')?.touched">
             The price can not be void
           </span>
         </div>
@@ -60,11 +64,8 @@
           <label for="map" class="block mb-2 text-sm font-medium text-gray-900">Select the location where you want to
             sell the product</label>
           <label for="map2" class="block mb-2 text-sm font-medium text-gray-500">(move the blue marker) </label>
-
           <div id="map" style="height: 400px;" class="z-30"></div>
-
         </div>
-
         <div *ngIf="this.formProduct.invalid">
           <span class="text-red-400">Fill the form correctly to add product.</span>
         </div>

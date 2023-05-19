@@ -30,6 +30,7 @@ export class OwnProfileComponent implements OnInit {
   user_fav_users: any[] = [];
   id!: number;
   heart_color: string = 'text-red-500 bg-red-200';
+  heart_color_prod: string = 'text-red-500 bg-red-200';
 
   constructor(
     private userService: UserService,
@@ -47,7 +48,35 @@ export class OwnProfileComponent implements OnInit {
   ngOnInit(): void {
     const userLogged = JSON.parse(localStorage.getItem('actualUser') || '[]');
     this.id_selected_user = userLogged.id;
+
     this.setAllProfileDataFromUser(this.id_selected_user);
+  }
+
+
+  /**
+   * Saves the like of the product that the user clicks, but if the user is
+   * not logged then it redirects to the login page.
+   */
+   saveLikeProduct(id: any) {
+    if(this.heart_color_prod == 'text-gray-500 bg-gray-200'){
+      this.heart_color_prod = 'text-red-500 bg-red-200';
+    } else {
+      this.heart_color_prod = 'text-gray-500 bg-gray-200';
+    }
+    if (localStorage.getItem('isLoggedIn') == 'true') {
+      const userLogged = JSON.parse(localStorage.getItem('actualUser') || '[]');
+      const productLike = {
+        id_user: userLogged.id,
+        id_product: id,
+      };
+      console.log(productLike);
+
+      this.likeProducts.addLikeProduct(productLike).subscribe((data) => {
+        console.log('addlike: ' + data);
+      });
+    } else {
+      this.route.navigate(['/login']);
+    }
   }
 
   /**
@@ -197,7 +226,8 @@ export class OwnProfileComponent implements OnInit {
 
   // Function to delete a user 
   deleteUsers() {
-    //Create variable to put the user id
+    if(confirm('Do you want to delete your account and all your products?')){
+      //Create variable to put the user id
     const id = {
       id: this.id_selected_user,
     };
@@ -287,17 +317,22 @@ export class OwnProfileComponent implements OnInit {
     localStorage.setItem('isLoggedIn','false'); 
     localStorage.removeItem('actualUser');
     this.route.navigate(['/']);
+    }
+    
     
   }
 
   deleteProduct(id_product_selected: any) {
-    const id_product = {
-      id: id_product_selected,
-    };
-    this.products.deleteProduct(id_product).subscribe((data) => {
-      console.log(data);
-    });
-    this.route.navigate(['/ownprofile']);
+    if(confirm('Do you want to delete this product?')){
+      const id_product = {
+        id: id_product_selected,
+      };
+      this.products.deleteProduct(id_product).subscribe((data) => {
+        console.log(data);
+      });
+      this.route.navigate(['/ownprofile']);
+    }
+    
   }
 
   public setAllProfileDataFromUser(id: number): void {

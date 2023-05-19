@@ -46,14 +46,15 @@ export class EditProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+      // Used to get the route id
     this.product_id = this.Aroute.snapshot.paramMap.get('id');
-
+      // Take all categoryes from DB
     this.categories.getCategories().subscribe((data: any) => {
       this.allCategories = data;
     });
-
+      // Entering the product service
     this.productService.getProducts().subscribe((data: Product[]) => {
+      // assigns the corresponding product to the variable this.product_selected.
       this.allProducts = data;
       for (let index = 0; index < this.allProducts.length; index++) {
         if (this.allProducts[index].id == this.product_id) {
@@ -61,7 +62,7 @@ export class EditProductComponent implements OnInit {
           break;
         }
       }
-
+      // creates a form called editProduct containing fields for editing the attributes of a selected product
       this.editProduct = new FormGroup({
         title: new FormControl(this.product_selected.title, [Validators.required, Validators.maxLength(50)]),
         img: new FormControl(''),
@@ -69,16 +70,9 @@ export class EditProductComponent implements OnInit {
         description: new FormControl(this.product_selected.description, [Validators.required]),
         category: new FormControl(this.product_selected.category, [Validators.required]),
       });
-      
     });
-
   }
-  
 
-  // uploadFile(event: Event){
-  //   const file = (event.target as HTMLInputElement)?.files?.[0];
-  //   this.formProduct.patchValue({})
-  // }
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 
@@ -86,6 +80,7 @@ export class EditProductComponent implements OnInit {
       this.selectedFile = fileInput.files[0];
       console.log(this.selectedFile);
 
+      //Image validations
       if(this.selectedFile){
         if(!(this.selectedFile.type == 'image/jpg' || this.selectedFile.type == 'image/jpeg' || this.selectedFile.type == 'image/png')){
           this.validateImgExt = true;
@@ -110,7 +105,7 @@ export class EditProductComponent implements OnInit {
       console.error('You need to select a product image.');
     }
   }
-
+      // This function is for update the product 
   updateProduct() {
     const id_user = JSON.parse(localStorage.getItem('actualUser')!);
     const formData = new FormData();

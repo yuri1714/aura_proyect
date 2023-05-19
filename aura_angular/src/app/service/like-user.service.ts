@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class LikeUserService {
 
-  //private apiUrl = 'http://localhost:8000/api/likeUser';
-  private apiUrl = 'http://aurabe.battlecats02.games/api/likeUser';
+  private apiUrl = 'http://localhost:8000/api/likeUser';
+  //private apiUrl = 'http://aurabe.battlecats02.games/api/likeUser';
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +16,7 @@ export class LikeUserService {
   }
 
   searchLikeUser(info: any){
-    return this.http.post('http://aurabe.battlecats02.games/api/searchLikeUser', info);
+    return this.http.post('http://localhost:8000/api/searchLikeUser', info);
   }
 
   addLikeUser(likeUser: any) {
@@ -24,6 +24,6 @@ export class LikeUserService {
   }
 
   deleteLikeUser(id: any){
-    return this.http.post('http://aurabe.battlecats02.games/api/deleteLikeUser', id);
+    return this.http.post('http://localhost:8000/api/deleteLikeUser', id);
   }
 }

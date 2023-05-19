@@ -59,21 +59,21 @@ export class AddProductComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // crea el mapa
+    // create the map
     const map = L.map('map').setView([41.36293574789545, 2.114803791046143], 13);
 
-    // agrega una capa de mapa base
+    // adds a basemap layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
       maxZoom: 18,
     }).addTo(map);
 
-    // agrega un control para seleccionar ubicaciones
+    // adds a control to select locations
     this.marker = L.marker([41.36293574789545, 2.114803791046143], {
       draggable: true,
     }).addTo(map);
 
-    // maneja el evento 'dragend' del marcador para obtener las coordenadas
+    // handles the 'dragend' event of the marker to obtain the coordinates of the marker
     this.marker.on('dragend', (e: L.LeafletEvent) => {
       const latlng = e.target.getLatLng();
       const lat = latlng.lat;
@@ -81,14 +81,12 @@ export class AddProductComponent implements OnInit {
 
       console.log(`Latitud: ${lat}, Longitud: ${lng}`);
     });
-
+    // It takes all the categories and places them in the variable.
     this.categories.getCategories().subscribe((data: any) => {
       this.allCategories = data;
     });
-
-
   }
-
+    // Function for image selection
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 
@@ -119,10 +117,14 @@ export class AddProductComponent implements OnInit {
       console.error('You need to select a product image.');
     }
   }
-
+      // Function to add the product to the database
   addProduct() {
+    // Variable to get the user id
     const id_user = JSON.parse(localStorage.getItem('actualUser')!);
+    // Variable for stacking and uploading all fields to database
     const formData = new FormData();
+    // Adds the filled fields to the FormData variable
+    // ------------------------------------------------------------------
     formData.append('title', this.formProduct.value.title!);
     formData.append('img', this.selectedFile);
     formData.append('price', this.formProduct.value.price!);
@@ -132,10 +134,9 @@ export class AddProductComponent implements OnInit {
     formData.append('user_paypal_id', this.formProduct.value.paypalId!);
     formData.append('lat', this.marker.getLatLng().lat.toString());
     formData.append('lng', this.marker.getLatLng().lng.toString());
-
+    // ------------------------------------------------------------------
       this.addproduct.addProduct(formData).subscribe({
         next: (data) => {
-          console.log(data);
           console.log('Product added!');
         },
         error: (err) => {

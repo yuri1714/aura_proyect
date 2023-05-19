@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/Models/user/user.module';
+import { LikeUserService } from 'src/app/service/like-user.service';
+import { LikeProductService } from 'src/app/service/like-product.service';
 
 @Component({
   selector: 'app-user-catalogue',
@@ -12,7 +14,9 @@ export class UserCatalogueComponent implements OnInit{
   allUsers!: User[];
   searchTerm: string = '';
 
-constructor(private userService: UserService,){} 
+constructor(private userService: UserService,
+            private likeUser: LikeUserService,
+            private likeProducts: LikeProductService){} 
   
 ngOnInit(): void {
   this.userService.getUsersForAdmin().subscribe({

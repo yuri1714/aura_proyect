@@ -1,18 +1,20 @@
-<input type="text" [(ngModel)]="searchTerm" placeholder="Search users" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-80 p-2.5" />
-<br>
-<thead>
-  <th>Id</th>
-  <th>Icon</th>
-  <th>Name</th>
-  <th>Lastname</th>
-  <th>Email</th>
-</thead>
-<tbody>
-  <tr *ngFor="let users of allUsers | filterUsers: searchTerm" >
-    <td [routerLink]="['/profile', users.id]">{{users.id}}</td>
-    <td [routerLink]="['/profile', users.id]">{{users.icon}}</td>
-    <td [routerLink]="['/profile', users.id]">{{users.name}}</td>
-    <td [routerLink]="['/profile', users.id]">{{users.lastname}}</td>
-    <td [routerLink]="['/profile', users.id]">{{users.email}}</td>
-  </tr>
-</tbody>
+<input type="text" [(ngModel)]="searchTerm" placeholder="Write the user" class="mb-5 ml-5 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-80 p-2.5" />
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg w-1/2 ml-5">
+  <table class="w-full text-sm text-left text-gray-500">
+
+      <tbody>
+          <tr *ngFor="let users of allUsers | filterUsers: searchTerm" class="bg-white border-b hover:bg-gray-50">
+              <th [routerLink]="['/profile', users.id]" scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
+                  <img class="w-10 h-10 rounded-full cursor-pointer" src="{{users.icon}}" alt="Jese image">
+                  <div class="pl-3">
+                      <div class="text-base font-semibold hover:underline cursor-pointer">{{ users.name }} {{users.lastname}}</div>
+                      <div class="font-normal text-gray-500">{{users.email}}</div>
+                  </div>  
+              </th>
+          </tr>
+
+
+      </tbody>
+  </table>
+</div>

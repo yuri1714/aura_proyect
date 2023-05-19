@@ -85,7 +85,8 @@ export class ProfilesComponent implements OnInit {
 
   // Function to delete a user 
   deleteUsers() {
-    //Create variable to put the user id
+    if(confirm('Do you want to delete your account and all your products?')){
+      //Create variable to put the user id
     const id = {
       id: this.id_selected_user,
     };
@@ -173,6 +174,8 @@ export class ProfilesComponent implements OnInit {
     });
 
     this.route.navigate(['/user-catalogue']);
+    }
+    
     
   }
 

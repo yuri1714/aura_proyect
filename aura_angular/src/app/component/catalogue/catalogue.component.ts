@@ -32,16 +32,17 @@ export class CatalogueComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    // Take all the products from db
     this.products.getProducts().subscribe((data: any) => {
       this.allProducts = data;
       console.log(this.allProducts);
     });
-
+    // Take all the categories from db
     this.categories.getCategories().subscribe((data: any) => {
       this.allCategories = data;
     });
   }
-
+    // Function to update the pricerange variable when you move the PriceRange  
   onPriceRangeChange(priceRange: number[]) {
     this.priceRange = priceRange;
     console.log(priceRange);

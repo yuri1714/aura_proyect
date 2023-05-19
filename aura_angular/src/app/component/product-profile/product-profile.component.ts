@@ -177,12 +177,15 @@ export class ProductProfileComponent implements OnInit {
    * @param id_product_selected ID of the product that the user clicks
    */
   deleteProduct(id_product_selected: any) {
-    const id_product = {
-      id: id_product_selected,
-    };
-    this.products.deleteProduct(id_product).subscribe((data) => {
-      console.log(data);
-    });
-    this.router.navigate(['/']);
+    if(confirm('Do you want to delete this product?')){
+      const id_product = {
+        id: id_product_selected,
+      };
+      this.products.deleteProduct(id_product).subscribe((data) => {
+        console.log(data);
+      });
+      this.router.navigate(['/']);
+    }
+    
   }
 }

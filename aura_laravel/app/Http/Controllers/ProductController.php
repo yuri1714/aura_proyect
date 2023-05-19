@@ -51,7 +51,7 @@ class ProductController extends Controller
         if ($request->hasFile('img')) {
             $img_name = $request->user_id . '_' . $id_product;
             $image->move(public_path('/image'), $img_name . '.png');
-            $products->img = 'http://aurabe.battlecats02.games/api/image/' . $img_name . '.png';
+            $products->img = 'http://localhost:8000/api/image/' . $img_name . '.png';
             $products->save();
             return response()->json($img_name . ' img added');
         } else {
@@ -94,7 +94,7 @@ class ProductController extends Controller
             $img_name = $request->user_id . '_' . $request->id . 'v=' . $randomNumber . '.png';
             File::delete(public_path('/image'), $img_name);
             $image->move(public_path('/image'), $img_name);
-            $product->img = 'http://aurabe.battlecats02.games/api/image/' . $img_name;
+            $product->img = 'http://localhost:8000/api/image/' . $img_name;
             $product->update();
             return response()->json($img_name . ' img added');
         } else {

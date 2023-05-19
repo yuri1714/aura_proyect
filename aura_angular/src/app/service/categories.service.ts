@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class CategoriesService {
 
-  //private apiUrl = 'http://localhost:8000/api/category';
-  private apiUrl = 'http://aurabe.battlecats02.games/api/category';
+  private apiUrl = 'http://localhost:8000/api/category';
+  //private apiUrl = 'http://aurabe.battlecats02.games/api/category';
 
   constructor(private http: HttpClient) { }
 
