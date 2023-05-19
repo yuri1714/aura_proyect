@@ -1,0 +1,69 @@
+    <div class="flex flex-col items-center justify-center py-10 mx-auto">
+        <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                    Edit your profile!
+                </h1>
+                <form class="space-y-4 md:space-y-6" [formGroup]="editForm" (ngSubmit)="submit()">
+                    <div> 
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+                        <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value="{{this.actual_user.name}}" formControlName="name">
+                        <span class="text-red-600" *ngIf="this.editForm.get('name')?.errors?.['required'] && this.editForm.get('name')?.touched">
+                            The name cannot be empty!
+                        </span>
+                        <span class="text-red-600" *ngIf="this.editForm.get('name')?.errors?.['pattern'] && this.editForm.get('name')?.touched">
+                            The name cannot contain numbers or special characters!
+                        </span>
+                        <span class="text-red-600" *ngIf="this.editForm.get('name')?.errors?.['minlength'] && this.editForm.get('name')?.touched">
+                            The name must have a minimum of 2 characters!
+                        </span>
+            
+            
+                 
+                    </div>
+                    <div> 
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
+                        <input type="text" name="lastname" id="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value="{{this.actual_user.lastname}}" formControlName="lastname">
+                        <span class="text-red-600" *ngIf="this.editForm.get('lastname')?.errors?.['required'] && this.editForm.get('lastname')?.touched">
+                            The last name cannot be empty!
+                        </span>
+                        <span class="text-red-600" *ngIf="this.editForm.get('lastname')?.errors?.['pattern'] && this.editForm.get('lastname')?.touched">
+                            The last name cannot contain numbers or special characters!
+                        </span>
+                        <span class="text-red-600" *ngIf="this.editForm.get('lastname')?.errors?.['minlength'] && this.editForm.get('lastname')?.touched">
+                            The last name must have a minimum of 2 characters!
+                        </span>
+            
+                    </div>
+                    <div> 
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                        <input type="password" name="password" id="password" value="{{this.actual_user.password}}" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" formControlName="password">
+                        <span class="text-red-600" *ngIf="this.editForm.get('password')?.errors?.['required'] && this.editForm.get('password')?.touched">
+                        The password cannot be empty!
+                    </span>
+                    <span class="text-red-600" *ngIf="this.editForm.get('password')?.errors?.['minlength'] && this.editForm.get('password')?.touched">
+                        The password needs to have 8 letters minimum!
+        
+                    </span>
+        
+                    </div>
+
+                    <div>
+                        <label for="img" class="block mb-2 text-sm font-medium text-gray-900">Profile image:</label>
+                        <input type="file" name="img" id="img" formControlName="img" (change)="onFileSelected($event)" >
+                        <span class="text-red-600" *ngIf="this.editForm.get('img')?.errors?.['required'] && this.editForm.get('img')?.touched">
+                          Image is required for the profile.
+                        </span>
+                        <span class="text-red-600" *ngIf="this.validateImgSize">
+                            The image size can not be more than 2Mb.
+                        </span>
+                          <span class="text-red-600" *ngIf="this.validateImgExt">
+                            The image only supports 'jpeg', 'jpg' and 'png'.
+                          </span>
+                    </div>
+
+                    <button class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="submit" [disabled]="editForm.invalid">Edit profile</button>
+                </form>
+            </div>
+        </div>
+    </div>

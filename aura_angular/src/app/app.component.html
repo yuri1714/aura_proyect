@@ -1,0 +1,93 @@
+<div class="flex flex-col place-items-center bg-gray-800 w-screen z-50 relative">
+  <section class="fixed bg-gray-800 w-screen">
+      <!-- navbar -->
+    <div id="navbar_div" class="flex text-white">
+      <div class="px-5 xl:px-12 py-2 flex w-full items-center">
+        <a class="text-3xl font-bold font-heading mr-10" href="#">
+          <img class="h-24 w-24" src="../assets/images/aura_logo.png" alt="Aura logo">
+        </a>
+
+          <a class="navbar-burger xl:hidden absolute inset-y-11 right-12">
+            <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="mobile-menu-2" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+          </button>
+          </a>
+
+        <div class="flex-col items-center hidden w-full md:flex absolute inset-y-20 bg-gray-800" id="mobile-menu-2">
+          <ul class="flex flex-col font-medium bg-gray-800 border border-gray-100 rounded-lg absolute md:bottom-3 lg:bottom-3 xl:bottom-3
+          md:flex-row md:space-x-8 lg:ml-0 md:mt-0 md:border-0 w-72 md:mr-8">
+            <li class="p-5 md:p-0 lg:p-0 xl:p-0">
+              <a routerLink="/home" class="hover:text-gray-200" id="text_menu">Home</a>
+            </li>
+            <li class="p-5  md:p-0 lg:p-0 xl:p-0">
+              <a routerLink="/catalogue" class="hover:text-gray-200" id="text_menu">Catalogue</a>
+            </li>
+            <li *ngIf="!checkLogin()" class="xl:hidden lg:hidden xxl:hidden flex md:hidden p-5 md:p-0 lg:p-0 xl:p-0">
+              <a href="/ownprofile" class="hover:text-gray-200" id="text_menu">Profile</a>
+            </li>
+            <li *ngIf="!checkLogin() && checkRole()" class="p-5 md:p-0 lg:p-0 xl:p-0">
+              <a routerLink="/add-product" class="hover:text-gray-200" id="text_menu">Add&nbsp;product</a>
+            </li>
+            <li *ngIf="!checkRole()" class="p-5  md:p-0 lg:p-0 xl:p-0">
+              <a routerLink="/user-catalogue" class="hover:text-gray-200" id="text_menu">User&nbsp;list</a>
+            </li>
+            <li *ngIf="checkLogin()" class="p-5  md:p-0 lg:p-0 xl:p-0" id="menu_option">
+              <a routerLink="/login" class="hover:text-gray-200" id="text_menu">Login</a>
+            </li>
+            <li *ngIf="!checkLogin()" id="menu_option" class="p-5 md:p-0 lg:p-0 xl:p-0">
+              <a routerLink="/home" class="hover:text-gray-200" id="text_menu" (click)="logout()">Logout</a>
+            </li>
+            <li id="menu_option" class="p-5  md:p-0 lg:p-0 xl:p-0" *ngIf="checkLogin()">
+              <a routerLink="/register" class="hover:text-gray-200" id="text_menu">Register</a>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+
+      
+
+      <div class="hidden xl:flex lg:flex md:flex items-center mr-8">
+        <!-- <a class="hover:text-gray-200 mr-5" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </a> -->
+
+        <a *ngIf="checkLogin()" class="flex items-center hover:text-gray-200" routerLink="/register">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </a>
+        <a *ngIf="!checkLogin()" href="/ownprofile">
+          <img class="md:w-24 md:h-24 rounded-full aspect-square p-3" src="{{this.user_icon_url}}">
+        </a>
+        
+        
+      </div>
+      
+    </div>
+    
+  </section>
+</div>
+
+
+<div class="container-fluid mt-32">
+  <router-outlet></router-outlet>
+</div>
+
+<footer class="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8 mt-5">
+  <div class="border-t py-10">
+    <div class="flex items-center justify-center">
+      <a>
+        <img class="h-14 w-14" src="../assets/images/aura_logo.png" alt="Aura logo">
+      </a>
+    </div>
+    
+      <p class="mt-5 text-center text-sm leading-6 text-slate-500">© 2023 Aura project. All rights reserved.</p>
+      <div class="mt-8 flex items-center justify-center space-x-4 text-sm font-semibold leading-6 text-slate-700">
+          <a>Contact: <i class="text-slate-400">aura.project.business@gmail.com</i></a>
+      </div>
+  </div>
+</footer>

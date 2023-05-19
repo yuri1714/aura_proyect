@@ -1,0 +1,8 @@
+<div class="price-filter">
+    <input type="range" min="0" max="5000" [(ngModel)]="rangeValue" (input)="onPriceRangeChange()">
+    <div class="price-labels">
+      <div class="min-label"> {{rangeValue}} -  {{ maxPrice }} €</div>
+    </div>
+  </div>
+
+

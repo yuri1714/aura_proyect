@@ -1,0 +1,130 @@
+    <section class="bg-white">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+                        Create and account
+                    </h1>
+                    <form class="space-y-4 md:space-y-6" [formGroup]="myform" (ngSubmit)="submit()">
+                        <div> 
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Name" formControlName="name">
+                            <span class="text-red-600" *ngIf="this.myform.get('name')?.errors?.['required'] && this.myform.get('name')?.touched">
+                                The name cannot be empty!
+                            </span>
+                            <span class="text-red-600" *ngIf="this.myform.get('name')?.errors?.['pattern'] && this.myform.get('name')?.touched">
+                                The name cannot contain numbers or special characters!
+                            </span>
+                            <span class="text-red-600" *ngIf="this.myform.get('name')?.errors?.['minlength'] && this.myform.get('name')?.touched">
+                                The name must have a minimum of 2 characters!
+                            </span>
+                
+                
+                     
+                        </div>
+                        <div> 
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
+                            <input type="text" name="lastname" id="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Last name" formControlName="lastname">
+                            <span class="text-red-600" *ngIf="this.myform.get('lastname')?.errors?.['required'] && this.myform.get('lastname')?.touched">
+                                The last name cannot be empty!
+                            </span>
+                            <span class="text-red-600" *ngIf="this.myform.get('lastname')?.errors?.['pattern'] && this.myform.get('lastname')?.touched">
+                                The last name cannot contain numbers or special characters!
+                            </span>
+                            <span class="text-red-600" *ngIf="this.myform.get('lastname')?.errors?.['minlength'] && this.myform.get('lastname')?.touched">
+                                The last name must have a minimum of 2 characters!
+                            </span>
+                
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Your email</label>
+                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" formControlName="email">
+                            <span class="text-red-600" *ngIf="this.myform.get('email')?.errors?.['pattern'] && this.myform.get('email')?.touched">
+                                Incorrect format of the email!
+                            </span>
+                            <span class="text-red-600" *ngIf="this.myform.get('email')?.errors?.['required'] && this.myform.get('email')?.touched">
+                                The email cannot be empty!
+                            </span>
+            
+                        </div>
+                        <div> 
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" formControlName="password">
+                            <span class="text-red-600" *ngIf="this.myform.get('password')?.errors?.['required'] && this.myform.get('password')?.touched">
+                            The password cannot be empty!
+                        </span>
+                        <span class="text-red-600" *ngIf="this.myform.get('password')?.errors?.['minlength'] && this.myform.get('password')?.touched">
+                            The password needs to have 8 letters minimum!
+            
+                        </span>
+            
+                        </div>
+                        <div>
+                            <label for="rpassword" class="block mb-2 text-sm font-medium text-gray-900">Confirm password</label>
+                            <input type="password" name="rpassword" id="rpassword" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" formControlName="rpassword" appConfirmPassword [param]="this.myform.value.password">
+                            <span class="text-red-600" *ngIf="this.myform.get('rpassword')?.errors?.['required'] && this.myform.get('rpassword')?.touched">
+                            The password cannot be empty!
+                        </span>
+                        <span class="text-red-600" *ngIf="this.myform.get('rpassword')?.errors?.['minLenght'] && this.myform.get('rpassword')?.touched">
+                            The password needs to have 8 letters minimum!
+            
+                        </span>
+                        <span class="text-red-600" *ngIf="this.myform.get('rpassword')?.errors?.['noMatch'] && this.myform.get('rpassword')?.touched">
+                            The password is not the same!
+                        </span>
+            
+            
+                        
+                        </div>
+                        <div>
+                            <label for="birthdate" class="block mb-2 text-sm font-medium text-gray-900">Birthdate</label>
+                            <input type="date" name="birthdate" id="birthdate" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" formControlName="birthdate">
+                            <span class="text-red-600" *ngIf="this.myform.get('birthdate')?.errors?.['required'] && this.myform.get('birthdate')?.touched">
+                                The birthdate cannot be empty!
+                            </span>
+                            <span class="text-red-600" *ngIf="this.myform.get('birthdate')?.errors?.['underAge'] && this.myform.get('birthdate')?.touched">
+                                If you are a minor you cannot register.
+                            </span>
+                            <span class="text-red-600" *ngIf="this.myform.get('birthdate')?.errors?.['futureDate'] && this.myform.get('birthdate')?.touched">
+                                You cannot put a future date.
+                            </span>
+            
+                        </div>
+                        <div>
+                            <label for="img" class="block mb-2 text-sm font-medium text-gray-900">Profile image: <a class="text-gray-400">(recommended images 208x208px)</a></label>
+                            <input type="file" name="img" id="img" formControlName="img" (change)="onFileSelected($event)" >
+                            <span class="text-red-600" *ngIf="this.myform.get('img')?.errors?.['required'] && this.myform.get('img')?.touched">
+                              Image is required for the profile.
+                            </span>
+                            <span class="text-red-600" *ngIf="this.validateImgSize">
+                                The image size can not be more than 2Mb.
+                            </span>
+                            <span class="text-red-600" *ngIf="this.validateImgExt">
+                                The image only supports 'jpeg', 'jpg' and 'png'.
+                            </span>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                              <input id="terms" aria-describedby="terms" type="checkbox" formControlName="terms" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300">
+                            </div>
+                            <div class="ml-3 text-sm">
+                              <label for="terms" class="font-light text-gray-500 ">I accept the <a class="font-medium text-primary-600 hover:underline" href="/terms-conditions">Terms and Conditions</a></label>
+                            </div>
+                            <span class="text-red-600" *ngIf="this.myform.get('terms')?.errors?.['required'] && this.myform.get('terms')?.touched">
+                                Accept the Terms and Conditions to register.
+                            </span>
+                        </div>
+                        <div *ngIf="myform.invalid">
+                            <span class="text-red-300">Fill the form to register.</span>
+                        </div>
+                        <button class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="submit" [disabled]="myform.invalid">Create an account</button>
+                        <p class="text-sm font-light text-gray-500">
+                            Already have an account? <a href="/login" class="font-medium text-primary-600 hover:underline ">Login here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </section>
+      

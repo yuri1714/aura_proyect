@@ -1,0 +1,94 @@
+<!-- Product Details Page -->
+<!-- <div class="w-full h-full flex justify-center items-center">
+  <div class="container mx-auto max-w-screen-lg text-center">
+    <-- Product Card --
+    <div *ngIf="product_selected" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-6">
+      <-- User info --
+      <div>
+        <div *ngIf="user_owner_info" (click)="setUserIds(user_owner_info.id)">
+          <h3 class="text-4xl uppercase col-start-1 col-end-3">{{ user_owner_info.name }} {{ user_owner_info.lastname }}</h3>
+        </div>
+        <button class="my-0 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+          <i class="far fa-comments">Chat</i> 
+        </button>
+      </div>
+      <div class="bg-white rounded-lg overflow-hidden shadow-lg relative">
+        <img class="w-full" src="{{ product_selected.img }}" alt="Product Image" />
+        
+        
+
+        <div class="px-6 py-4">
+          <h1 class="text-lg font-bold mb-2">{{ product_selected.title }}</h1>
+          <p class="text-gray-700 text-base">
+            {{ product_selected.description }}
+          </p>
+          <div class="flex justify-between items-center mt-4">
+            <p class="text-gray-700 text-lg font-bold">
+              {{ product_selected.price }}€
+            </p>
+            <div>
+              <button type="button"
+                class="justify-center mr-2 py-2 px-5 bg-green-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 text-white rounded-lg"
+                (click)="saveLikeProduct()">
+                <i class="">💗</i>
+              </button>
+              <div *ngIf="this.selected_is_the_same">
+                <button type="button"
+                  class="justify-center mr-2 py-2 px-5 bg-green-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 text-white rounded-lg"
+                  (click)="deleteProduct(product_selected.id)">
+                  <i class="">Delete</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <-- <div id='map' style="height: 400px;"></div> --
+    </div>
+
+  </div>
+  
+</div> -->
+
+
+
+<section class="text-gray-700 body-font overflow-hidden bg-white">
+  <div class="container px-5 mx-auto">
+    <div class="mx-auto flex flex-wrap justify-center items-center">
+      <div class="lg:w-1/2 w-full mt-6">
+        <div class="flex flex-cols-2 mt-8" (click)="setUserIds(user_owner_info.id)">
+          <div>
+            <a class="cursor-pointer">
+              <img class="w-20 h-20 rounded-full aspect-square p-3" *ngIf="user_owner_info" src="{{ user_owner_info.icon }}">
+            </a>
+          </div>
+          <div class="mt-5">
+            <h2 class="text-2xl title-font text-gray-500 tracking-widest" *ngIf="user_owner_info">{{ user_owner_info.name }} {{ user_owner_info.lastname }}</h2>
+          </div>
+        </div>
+        <div class="h-96 flex justify-center items-center">
+          <img *ngIf="product_selected" alt="ecommerce" class="h-full object-center object-cover rounded-2xl" src="{{ product_selected.img }}">
+        </div>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1 mt-5" *ngIf="product_selected">{{ product_selected.title }}</h1>
+        <p class="text-gray-400 text-xl" *ngIf="product_selected">{{ product_selected.category }}</p>
+        <p class="leading-relaxed mt-4 mb-5" *ngIf="product_selected">{{ product_selected.description }}</p>
+        <div class="flex">
+          <span class="title-font font-medium text-2xl text-gray-900" *ngIf="product_selected">{{ product_selected.price }}€</span>
+          <button *ngIf="this.selected_is_the_same || this.loggedRole == 'admin'" (click)="deleteProduct(product_selected.id)" class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Delete your product</button>
+          <button *ngIf="!this.selected_is_the_same && this.loggedRole == 'user'" (click)="saveLikeProduct()" [ngClass]="this.heart_color" class="rounded-full w-20 h-20 p-0 border-0 inline-flex items-center justify-center ml-auto">
+            <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="w-full mt-5 -mb-16">
+          <h2>Product location: </h2>
+          <div id='map' style="height: 400px;" class="z-20"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </section>

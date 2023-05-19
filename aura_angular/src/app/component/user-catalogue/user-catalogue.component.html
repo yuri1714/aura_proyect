@@ -1,0 +1,18 @@
+<input type="text" [(ngModel)]="searchTerm" placeholder="Search users" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-80 p-2.5" />
+<br>
+<thead>
+  <th>Id</th>
+  <th>Icon</th>
+  <th>Name</th>
+  <th>Lastname</th>
+  <th>Email</th>
+</thead>
+<tbody>
+  <tr *ngFor="let users of allUsers | filterUsers: searchTerm" >
+    <td [routerLink]="['/profile', users.id]">{{users.id}}</td>
+    <td [routerLink]="['/profile', users.id]">{{users.icon}}</td>
+    <td [routerLink]="['/profile', users.id]">{{users.name}}</td>
+    <td [routerLink]="['/profile', users.id]">{{users.lastname}}</td>
+    <td [routerLink]="['/profile', users.id]">{{users.email}}</td>
+  </tr>
+</tbody>

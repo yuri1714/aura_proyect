@@ -1,0 +1,67 @@
+<div *ngIf="selected_user" class="mt-12 max-w-screen-xl mx-auto p-4">
+  <div class="sm:flex sm:flex-cols-2">  
+    <div>
+      <a><img class="w-52 h-52 mr-10 rounded-full aspect-square" src="{{selected_user.icon}}"></a>
+    </div>
+    <div>
+      <h3 class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700">
+        {{selected_user.name}} {{selected_user.lastname}}
+      </h3>
+      <div
+        class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+        <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+        {{selected_user.location}}
+      </div>
+      <div *ngIf="!selected_is_the_same">
+        <button (click)="saveLikeUser()" [ngClass]="this.heart_color" class="rounded-full w-20 h-20 p-0 border-0 inline-flex items-center justify-center ml-auto">
+          <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+          </svg>
+        </button>
+      <div *ngIf="role_user == 'admin'">
+        <button (click)="deleteUsers()" type="button" class="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded mt-3" >
+          <i class="">Delete User</i>
+        </button>
+      </div>
+    </div>
+    </div>
+  </div>
+  
+  
+
+<div class="mt-10 py-10 border-t border-blueGray-200 text-center max-w-screen-xl mx-auto p-4">
+  <div class=" justify-center">
+    <div class="columns-3">
+      <div>
+        <button id="productos" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" (click)="producCheck()">
+          Products
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--products-->
+<div *ngIf="productsProfile == true">
+
+  <div class="container xl:columns-3 lg:columns-2 md:columns-2 w-full">
+    <p>User products:</p>
+    <div *ngFor="let product of user_products" class=" mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
+      <div [routerLink]="['/product-profile', product.id]">
+        <div class="flex justify-center items-center">
+            <img class="rounded-xl h-52 " src="{{ product.img }}" />
+        </div>
+        <div class="flex justify-between items-center">
+            <div class="w-36">
+                <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
+                <p class="mt-2">{{ product.price }}€</p>
+            </div>
+            <div>
+                <button *ngIf="selected_is_the_same" class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110"
+                [routerLink]="['/edit-product', product.id]">Edit</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

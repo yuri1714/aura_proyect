@@ -1,0 +1,73 @@
+<h1 class="text-4xl mb-10 px-5">Products</h1>
+<div class="w-full border-b px-20 bg-white">
+  <div class="relative">
+	<div class="absolute flex items-center ml-2 h-full">
+	  <svg class="w-4 h-4 fill-current text-primary-gray-dark" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M15.8898 15.0493L11.8588 11.0182C11.7869 10.9463 11.6932 10.9088 11.5932 10.9088H11.2713C12.3431 9.74952 12.9994 8.20272 12.9994 6.49968C12.9994 2.90923 10.0901 0 6.49968 0C2.90923 0 0 2.90923 0 6.49968C0 10.0901 2.90923 12.9994 6.49968 12.9994C8.20272 12.9994 9.74952 12.3431 10.9088 11.2744V11.5932C10.9088 11.6932 10.9495 11.7869 11.0182 11.8588L15.0493 15.8898C15.1961 16.0367 15.4336 16.0367 15.5805 15.8898L15.8898 15.5805C16.0367 15.4336 16.0367 15.1961 15.8898 15.0493ZM6.49968 11.9994C3.45921 11.9994 0.999951 9.54016 0.999951 6.49968C0.999951 3.45921 3.45921 0.999951 6.49968 0.999951C9.54016 0.999951 11.9994 3.45921 11.9994 6.49968C11.9994 9.54016 9.54016 11.9994 6.49968 11.9994Z"></path>
+	  </svg>
+	</div>
+
+	<input type="text" [(ngModel)]="searchTerm" placeholder="Search product name..." class="px-8 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+	  </div>
+
+	<div class="flex items-center justify-between mt-4">
+	  <p class="text-2xl mb-5">
+		Filters
+	  </p>
+	</div>
+  <div class="xl:flex xl:flex-cols-2 lg:flex-cols-2 md:flex-cols-2 sm:flex-cols-1">
+    <div>
+      <a>Category: </a>
+      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
+      <form [formGroup]="formCategory">
+        <select name="category" formControlName="category" class="block w-48 p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+          <option class="dropdown-item" selected value="undefined">All</option>
+          <option *ngFor="let category of allCategories" [value]="category.name" >
+            {{ category.name }}
+          </option>
+        </select>
+        </form>
+      </div>
+    </div>
+    <div class="xl:px-2 w-full mt-4">
+      <label>Price: </label>
+      <app-price-filter (priceRangeChange)="onPriceRangeChange($event)"></app-price-filter>
+    </div>
+  </div>
+</div>
+
+<div class="xl:columns-4 mb-5 lg:columns-2 md:columns-2 mt-20 sm:justify-center sm:items-center">
+  <div *ngFor="let product of allProducts | filter: searchTerm |categoryFilter: formCategory.value.category || ''  | priceFilter: priceRange | paginate: { itemsPerPage: 8, currentPage: page }" 
+        class="container mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-fit">
+    <div [routerLink]="['/product-profile', product.id]">
+      <div class="flex justify-center items-center">
+          <img class="rounded-xl h-52" src="{{ product.img }}" />
+      </div>
+      <div class="flex justify-between items-center">
+          <div class="w-full">
+              <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
+              <p class="mt-2">{{ product.price }}€</p>
+              <p class="product-category text-gray-400">{{ product.category }}</p>
+              <p class="product-description h-12 overflow-auto">{{ product.description }}</p>
+          </div>
+          <!-- <div>
+              <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
+          </div> -->
+      </div>
+      <div class="mt-5">
+        <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="flex justify-center">
+  <div class="pagination">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+</div>
+
+
+
+
+
+
