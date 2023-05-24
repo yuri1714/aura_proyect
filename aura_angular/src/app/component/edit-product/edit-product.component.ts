@@ -30,12 +30,12 @@ export class EditProductComponent implements OnInit {
   product_selected!: Product;
   editProduct!: FormGroup;
   //IMG
+
   public preview!: string;
   public files: any = [];
   public loading!: boolean;
   public allCategories: any;
 
-  // fileToUpload: File = null;
 
   constructor(
     private http: HttpClient,
@@ -43,16 +43,16 @@ export class EditProductComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private Aroute: ActivatedRoute,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-      // Used to get the route id
+    // Used to get the route id
     this.product_id = this.Aroute.snapshot.paramMap.get('id');
-      // Take all categoryes from DB
+    // Take all categoryes from DB
     this.categories.getCategories().subscribe((data: any) => {
       this.allCategories = data;
     });
-      // Entering the product service
+    // Entering the product service
     this.productService.getProducts().subscribe((data: Product[]) => {
       // assigns the corresponding product to the variable this.product_selected.
       this.allProducts = data;
@@ -73,6 +73,10 @@ export class EditProductComponent implements OnInit {
     });
   }
 
+  /**
+   * Fuction for chage the image a edit product
+   * @param event
+   */
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 
@@ -81,31 +85,33 @@ export class EditProductComponent implements OnInit {
       console.log(this.selectedFile);
 
       //Image validations
-      if(this.selectedFile){
-        if(!(this.selectedFile.type == 'image/jpg' || this.selectedFile.type == 'image/jpeg' || this.selectedFile.type == 'image/png')){
+      if (this.selectedFile) {
+        if (!(this.selectedFile.type == 'image/jpg' || this.selectedFile.type == 'image/jpeg' || this.selectedFile.type == 'image/png')) {
           this.validateImgExt = true;
         } else {
           this.validateImgExt = false;
         }
 
-        if(this.selectedFile.size > 2000000){
+        if (this.selectedFile.size > 2000000) {
           this.validateImgSize = true;
         } else {
           this.validateImgSize = false;
         }
 
-        if(this.validateImgExt || this.validateImgSize){
-          this.editProduct.controls['img'].setErrors({'incorrect': true});
-        } else if(!(this.validateImgExt && this.validateImgSize)){
+        if (this.validateImgExt || this.validateImgSize) {
+          this.editProduct.controls['img'].setErrors({ 'incorrect': true });
+        } else if (!(this.validateImgExt && this.validateImgSize)) {
           this.editProduct.controls['img'].setErrors(null);
         }
-    }
+      }
     } else {
       // Error message if it is not file selected
       console.error('You need to select a product image.');
     }
   }
-      // This function is for update the product 
+  /**
+   * This function is for update the product
+   */
   updateProduct() {
     const id_user = JSON.parse(localStorage.getItem('actualUser')!);
     const formData = new FormData();
@@ -118,16 +124,16 @@ export class EditProductComponent implements OnInit {
     formData.append('category', this.editProduct.value.category!);
     formData.append('user_id', id_user.id);
 
-      this.productService.editProduct(formData).subscribe({
-        next: (data) => {
-          console.log(data);
-          console.log('Product added!');
-        },
-        error: (err) => {
-          console.log('error: ', err);
-        },
-      });
-      this.router.navigate(['/ownprofile']);
+    this.productService.editProduct(formData).subscribe({
+      next: (data) => {
+        console.log(data);
+        console.log('Product added!');
+      },
+      error: (err) => {
+        console.log('error: ', err);
+      },
+    });
+    this.router.navigate(['/ownprofile']);
 
   }
 

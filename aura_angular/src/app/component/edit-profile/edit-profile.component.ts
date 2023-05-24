@@ -70,7 +70,7 @@ export class EditProfileComponent implements OnInit{
     });
 
   }
-
+  
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 

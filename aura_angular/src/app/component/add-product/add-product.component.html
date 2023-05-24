@@ -12,11 +12,11 @@
             required="">
           <span class="text-red-600"
             *ngIf="this.formProduct.get('title')?.errors?.['required'] && this.formProduct.get('title')?.touched">
-            The title can not be void
+            The title can not be empty.
           </span>
           <span class="text-red-600"
             *ngIf="this.formProduct.get('title')?.errors?.['maxlength'] && this.formProduct.get('title')?.touched">
-            50 caracters limit exceeded
+            50 caracters limit exceeded.
           </span>
         </div>
         <div>
@@ -35,11 +35,15 @@
         </div>
         <div>
           <label for="price" class="block mb-2 text-sm font-medium text-gray-900">Price</label>
-          <input type="number" formControlName="price"
+          <input type="text" formControlName="price"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
           <span class="text-red-600"
             *ngIf="this.formProduct.get('price')?.errors?.['required'] && this.formProduct.get('price')?.touched">
-            The price can not be void
+            The price can not be empty.
+          </span>
+          <span class="text-red-600"
+            *ngIf="this.formProduct.get('price')?.errors?.['pattern'] && this.formProduct.get('price')?.touched">
+            The price can not contain letters.
           </span>
         </div>
         <div>
@@ -48,7 +52,11 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
           <span class="text-red-600"
             *ngIf="this.formProduct.get('description')?.errors?.['required'] && this.formProduct.get('description')?.touched">
-            The description can not be void
+            The description can not be empty.
+          </span>
+          <span class="text-red-600"
+            *ngIf="this.formProduct.get('description')?.errors?.['minlength'] && this.formProduct.get('description')?.touched">
+            Minimum 10 caracters.
           </span>
         </div>
         <div>
@@ -67,7 +75,7 @@
           <div id="map" style="height: 400px;" class="z-30"></div>
         </div>
         <div *ngIf="this.formProduct.invalid">
-          <span class="text-red-400">Fill the form correctly to add product.</span>
+          <span class="text-red-400">Fill all the fields of the form correctly to add product.</span>
         </div>
         <button (click)="addProduct()" [disabled]="this.formProduct.invalid"
           class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add

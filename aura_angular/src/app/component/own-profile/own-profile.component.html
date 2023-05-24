@@ -3,48 +3,53 @@
     <div>
       <a><img class="w-52 h-52 mr-10 rounded-full aspect-square" src="{{selected_user.icon}}"></a>
     </div>
-  
-  <div>
-    <h3 class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700">
-      {{selected_user.name}} {{selected_user.lastname}}
-      <button type="button" [routerLink]="['/edit-profile']"><svg class="h-12 w-12 text-blue-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-      </svg></button>
-    </h3>
-    
-    
-    <div
-      class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-      <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-      {{selected_user.location}}
-    </div>
-    <div *ngIf="selected_is_the_same || this.selected_user.role != 'admin'">
-      <button (click)="deleteUsers()" type="button" class="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded mt-3" >
-        <i class="">Delete account</i>
-      </button>
+
+    <div>
+      <h3 class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700">
+        {{selected_user.name}} {{selected_user.lastname}}
+        <button type="button" [routerLink]="['/edit-profile']"><svg class="h-12 w-12 text-blue-500" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+          </svg></button>
+      </h3>
+
+
+      <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+        <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+        {{selected_user.location}}
+      </div>
+      <div *ngIf="selected_is_the_same || this.selected_user.role != 'admin'">
+        <button (click)="deleteUsers()" type="button"
+          class="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded mt-3">
+          <i class="">Delete account</i>
+        </button>
+      </div>
     </div>
   </div>
 </div>
-  </div>
-  
+
 
 <div class="mt-10 py-10 border-t border-blueGray-200 text-center max-w-screen-xl mx-auto p-4">
   <div class=" justify-center">
     <div class="columns-3 text-center">
       <div>
-        <button id="productos" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full" (click)="producCheck()">
+        <button id="productos" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
+          (click)="producCheck()">
           Products
         </button>
       </div>
       <div *ngIf="selected_is_the_same">
-        <button id="favoritos" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"(click)="favoritesCheck()">
-        Favourites
-      </button>
+        <button id="favoritos" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
+          (click)="favoritesCheck()">
+          Favorites
+        </button>
       </div>
       <div *ngIf="selected_is_the_same">
-        <button id="chats" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full" (click)="chatCheck()">
-        Chats
-      </button>
+        <button id="chats" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
+          (click)="chatCheck()">
+          Chats
+        </button>
       </div>
     </div>
   </div>
@@ -53,27 +58,33 @@
 <!--products-->
 <div class="flex flex-row justify-center items-center">
   <div *ngIf="productsProfile == true" class="container xl:columns-3 lg:columns-2 md:columns-2 w-full">
-    <div *ngFor="let product of user_products" class=" mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
+    <div *ngIf="!user_products[0]" class="w-full">
+      <p class="text-3xl">You don't have products yet.</p>
+    </div>
+    <div *ngFor="let product of user_products"
+      class=" mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
       <div>
         <div [routerLink]="['/product-profile', product.id]" class="flex justify-center items-center cursor-pointer">
-            <img class="rounded-xl h-52 " src="{{ product.img }}" />
+          <img class="rounded-xl h-52 " src="{{ product.img }}" />
         </div>
         <div class="flex justify-between items-center">
-            <div class="w-36">
-                <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
-                <p class="mt-2">{{ product.price }}€</p>
-            </div>
-            <div>
-                <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110 mt-5"
-                [routerLink]="['/edit-product', product.id]">Edit</button>
-                <button *ngIf="this.selected_is_the_same" (click)="deleteProduct(product.id)" class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded mt-3">Delete</button>
-            </div>
+          <div class="w-36">
+            <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
+            <p class="mt-2">{{ product.price }}€</p>
+          </div>
+          <div>
+            <button
+              class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110 mt-5"
+              [routerLink]="['/edit-product', product.id]">Edit</button>
+            <button *ngIf="this.selected_is_the_same" (click)="deleteProduct(product.id)"
+              class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded mt-3">Delete</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-  
+
 <!--favorites-->
 <div *ngIf="selected_is_the_same">
   <div *ngIf="favoritesProfile == true">
@@ -82,33 +93,42 @@
       <div class=" justify-center">
         <div class="columns-2">
           <div>
-            <button class="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" (click)="favsProducts()">
+            <button
+              class="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              (click)="favsProducts()">
               Products
             </button>
           </div>
           <div>
-            <button class="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" (click)="favsUsers()">
-            Users
-          </button>
+            <button
+              class="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              (click)="favsUsers()">
+              Users
+            </button>
           </div>
         </div>
       </div>
 
       <div *ngIf="favProducts" class="flex flex-col justify-center items-center">
         <div class=" w-full">
-          <p class="text-3xl mt-10 mb-10">Favourite products:</p>
+          <p class="text-3xl mt-10 mb-10">Favorite products:</p>
         </div>
         <div class="xl:columns-3 lg:columns-2 md:columns-2 w-full">
-          <div *ngFor="let product of user_fav_products" class="mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
+          <div *ngIf="!user_fav_products[0]" class="w-full">
+            <p class="text-2xl">You don't have favorite products yet.</p>
+          </div>
+          <div *ngFor="let product of user_fav_products"
+            class="mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
             <div>
-              <div [routerLink]="['/product-profile', product.id]" class="flex justify-center items-center cursor-pointer">
-                  <img class="rounded-xl h-52 " src="{{ product.img }}" />
+              <div [routerLink]="['/product-profile', product.id]"
+                class="flex justify-center items-center cursor-pointer">
+                <img class="rounded-xl h-52 " src="{{ product.img }}" />
               </div>
               <div class="flex justify-between items-center">
-                  <div class="w-36">
-                      <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
-                      <p class="mt-2 mr-20">{{ product.price }}€</p>
-                  </div>
+                <div class="w-full">
+                  <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
+                  <p class="mt-2 text-3xl font-bold">{{ product.price }}€</p>
+                </div>
               </div>
             </div>
           </div>
@@ -117,18 +137,23 @@
 
       <div *ngIf="favUsers" class="flex flex-col justify-center items-center">
         <div class="w-full">
-          <p class="text-3xl mt-10 mb-10">Favourite users:</p>
+          <p class="text-3xl mt-10 mb-10">Favorite users:</p>
         </div>
         <div class="xl:columns-3 lg:columns-2 md:columns-2 w-full">
-          <div *ngFor="let user of user_fav_users" class="mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
+          <div *ngIf="!user_fav_users[0]" class="w-full">
+            <p class="text-2xl">You don't have favorite users yet.</p>
+
+          </div>
+          <div *ngFor="let user of user_fav_users"
+            class="mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
             <div>
               <div [routerLink]="['/profile', user.id]" class="flex justify-center items-center cursor-pointer">
-                  <img class="rounded-xl h-52 " src="{{ user.icon }}" />
+                <img class="rounded-xl h-52 " src="{{ user.icon }}" />
               </div>
               <div class="flex justify-between items-center">
-                  <div class="w-36">
-                      <h2 class="mt-5 text-xl font-semibold">{{ user.name }} {{ user.lastname }}</h2>
-                  </div>
+                <div class="w-36">
+                  <h2 class="mt-5 text-xl font-semibold">{{ user.name }} {{ user.lastname }}</h2>
+                </div>
               </div>
             </div>
           </div>
@@ -142,6 +167,15 @@
 <!--chats-->
 <div *ngIf="selected_is_the_same">
   <div *ngIf="chatProfile == true">
-    <p>En construccion :D</p>
+<!-- Chat -->
+    <tr *ngFor="let users of startedChats" class="bg-white border-b hover:bg-gray-50">
+      <th [routerLink]="['/chat', users.id]" scope="row"
+        class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
+        <img class="w-10 h-10 rounded-full cursor-pointer" src="{{users.icon}}" alt="Jese image">
+        <div class="pl-3">
+          <div class="text-base font-semibold hover:underline cursor-pointer">{{ users.name }} {{users.lastname}}</div>
+        </div>
+      </th>
+    </tr>
   </div>
 </div>

@@ -14,9 +14,7 @@ export class UserCatalogueComponent implements OnInit{
   allUsers!: User[];
   searchTerm: string = '';
 
-constructor(private userService: UserService,
-            private likeUser: LikeUserService,
-            private likeProducts: LikeProductService){} 
+constructor(private userService: UserService,){} 
   
 ngOnInit(): void {
   this.userService.getUsersForAdmin().subscribe({

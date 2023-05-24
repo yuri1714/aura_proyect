@@ -28,8 +28,10 @@ export class AddProductComponent implements OnInit {
   validateImgExt: boolean = false;
   validateImgSize: boolean = false;
   //IMG
+
   //MARKER
   marker!: L.Marker;
+
   //MARKER
   public preview!: string;
   public files: any = [];
@@ -46,11 +48,12 @@ export class AddProductComponent implements OnInit {
     private router: Router
   ) { }
 
+
   formProduct = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
     img: new FormControl('', [Validators.required]),
-    price: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
+    price: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(10)]),
     category: new FormControl('', [Validators.required]),
     paypalId: new FormControl('', []),
     lat: new FormControl(),
@@ -81,48 +84,58 @@ export class AddProductComponent implements OnInit {
 
       console.log(`Latitud: ${lat}, Longitud: ${lng}`);
     });
+
     // It takes all the categories and places them in the variable.
     this.categories.getCategories().subscribe((data: any) => {
       this.allCategories = data;
     });
   }
-    // Function for image selection
+
+  /**
+   * Function for image selection in form aff-product
+   * @param event
+   */
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 
     if (fileInput.files != null) {
       this.selectedFile = fileInput.files[0];
       console.log(this.selectedFile);
-      if(this.selectedFile){
+      if (this.selectedFile) {
         if (!(this.selectedFile.type == 'image/jpg' || this.selectedFile.type == 'image/jpeg' || this.selectedFile.type == 'image/png')) {
           this.validateImgExt = true;
         } else {
           this.validateImgExt = false;
         }
 
-        if(this.selectedFile.size > 2000000){
+        if (this.selectedFile.size > 2000000) {
           this.validateImgSize = true;
         } else {
           this.validateImgSize = false;
         }
 
-        if(this.validateImgExt || this.validateImgSize){
-          this.formProduct.controls['img'].setErrors({'incorrect': true});
-        } else if(!(this.validateImgExt && this.validateImgSize)){
+        if (this.validateImgExt || this.validateImgSize) {
+          this.formProduct.controls['img'].setErrors({ 'incorrect': true });
+        } else if (!(this.validateImgExt && this.validateImgSize)) {
           this.formProduct.controls['img'].setErrors(null);
         }
-    }
+      }
     } else {
       // Error message if it is not file selected
       console.error('You need to select a product image.');
     }
   }
-      // Function to add the product to the database
+
+  /**
+   * Function to add the product to the database
+   */
   addProduct() {
     // Variable to get the user id
     const id_user = JSON.parse(localStorage.getItem('actualUser')!);
+
     // Variable for stacking and uploading all fields to database
     const formData = new FormData();
+
     // Adds the filled fields to the FormData variable
     // ------------------------------------------------------------------
     formData.append('title', this.formProduct.value.title!);
@@ -135,15 +148,16 @@ export class AddProductComponent implements OnInit {
     formData.append('lat', this.marker.getLatLng().lat.toString());
     formData.append('lng', this.marker.getLatLng().lng.toString());
     // ------------------------------------------------------------------
-      this.addproduct.addProduct(formData).subscribe({
-        next: (data) => {
-          console.log('Product added!');
-        },
-        error: (err) => {
-          console.log('error: ', err);
-        },
-      });
-      this.router.navigate(['/']);
+
+    this.addproduct.addProduct(formData).subscribe({
+      next: (data) => {
+        console.log('Product added!');
+      },
+      error: (err) => {
+        console.log('error: ', err);
+      },
+    });
+    this.router.navigate(['/']);
 
   }
 

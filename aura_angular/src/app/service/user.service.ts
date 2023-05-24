@@ -11,8 +11,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  //private apiUrl = 'aurabe.battlecats02.games';
-  private apiUrl = 'localhost:8000';
+  private apiUrl = 'be.auras.social';
+  //private apiUrl = 'localhost:8000';
 
 // Check if login is correct
 checkLogin(user: any){

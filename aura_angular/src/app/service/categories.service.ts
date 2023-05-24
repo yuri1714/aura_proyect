@@ -6,11 +6,15 @@ import { Injectable } from '@angular/core';
 })
 export class CategoriesService {
 
-  private apiUrl = 'http://localhost:8000/api/category';
-  //private apiUrl = 'http://aurabe.battlecats02.games/api/category';
+  //private apiUrl = 'http://localhost:8000/api/category';
+  private apiUrl = 'http://be.auras.social/api/category';
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * function from call to categori database
+   * @returns all categories in the database
+   */
   getCategories() {
     return this.http.get(this.apiUrl);
   }

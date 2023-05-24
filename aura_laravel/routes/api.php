@@ -50,5 +50,7 @@ Route::get('/image/{filename}', function ($filename) {
 Route::post('image_upload', [FileController::class, 'fileUpload' ]);
 
 Route::post('message', [ChatController::class, 'message']);
+Route::post('createChat', [ChatController::class, 'createChat']);
+Route::get('getChats', [ChatController::class, 'getChat']);
 
 

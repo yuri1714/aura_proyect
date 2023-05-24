@@ -14,6 +14,7 @@ import { OwnProfileComponent } from './component/own-profile/own-profile.compone
 import { EditProductComponent } from './component/edit-product/edit-product.component';
 import { EditProfileComponent } from './component/edit-profile/edit-profile.component';
 import { TermsConditionsComponent } from './component/terms-conditions/terms-conditions.component';
+import { ChatComponent } from './component/chat/chat.component';
 
 const routes: Routes = [
   {
@@ -28,10 +29,18 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [AuthGuard],
+    data: {
+      undefined: 'undefined'
+    }
   },
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthGuard],
+    data: {
+      undefined: 'undefined'
+    }
   },
   {
     path: 'add-product',
@@ -73,6 +82,11 @@ const routes: Routes = [
     data: {
       role: 'admin'
     }
+  },
+  {
+    path: 'chat/:id',
+    component: ChatComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'terms-conditions',

@@ -12,8 +12,8 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class LoginComponent implements OnInit{
 
-  constructor(private userService: UserService, 
-              private authService: AuthServiceService, 
+  constructor(private userService: UserService,
+              private authService: AuthServiceService,
               private router: Router,
               private cookies: CookieService){}
 
@@ -37,7 +37,9 @@ export class LoginComponent implements OnInit{
 
   submit() {}
 
-  // Function to validate the user can login or not
+  /**
+   * Function to validate the user can login or not
+   */
   checkUser(){
 
     this.userService.checkLogin(this.formLogin.value).subscribe((response) => {
@@ -50,9 +52,9 @@ export class LoginComponent implements OnInit{
       }else{
         this.error_message = 'Email or password incorrect!';
       }
-  
+
     }, (error) => {});
-    
+
   };
 
 }

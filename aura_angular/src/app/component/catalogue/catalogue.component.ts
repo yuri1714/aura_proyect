@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CategoryFilterPipe } from 'src/app/pipes/category-filter.pipe';
-import { FormControl,FormGroup,Validators,ReactiveFormsModule} from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CategoriesService } from 'src/app/service/categories.service';
 import { Product } from 'src/app/Models/products/products.module';
 
@@ -37,12 +37,17 @@ export class CatalogueComponent implements OnInit {
       this.allProducts = data;
       console.log(this.allProducts);
     });
+
     // Take all the categories from db
     this.categories.getCategories().subscribe((data: any) => {
       this.allCategories = data;
     });
   }
-    // Function to update the pricerange variable when you move the PriceRange  
+
+  /**
+   * Function to update the pricerange variable when you move the PriceRange
+   * @param priceRange
+   */
   onPriceRangeChange(priceRange: number[]) {
     this.priceRange = priceRange;
     console.log(priceRange);

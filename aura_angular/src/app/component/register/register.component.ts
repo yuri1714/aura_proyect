@@ -16,9 +16,9 @@ export class RegisterComponent implements OnInit {
   validateImgExt: boolean = false;
   validateImgSize: boolean = false;
 
-  constructor(public userService: UserService, 
+  constructor(public userService: UserService,
               private router: Router) { }
-  
+
   ngOnInit(): void {
     this.validateImgExt = false;
     this.validateImgSize = false;
@@ -58,9 +58,14 @@ export class RegisterComponent implements OnInit {
         Validators.requiredTrue
       ])
     })
-    
+
   }
 
+  /**
+   * function for validate the age from a user
+   * @param control
+   * @returns true if the age its less than 18
+   */
   ageValidator(control: any) {
     const birthdate = new Date(control.value);
     const today = new Date();
@@ -102,6 +107,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  /**
+   * Function to save and validate a icon of user
+   * @param event its a image select of form html
+   */
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 
@@ -127,7 +136,7 @@ export class RegisterComponent implements OnInit {
           this.myform.controls['img'].setErrors(null);
         }
       }
-      
+
     } else {
       // Error message if it is not file selected
       console.error('You need to select a product image.');

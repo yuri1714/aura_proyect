@@ -32,22 +32,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const echo = new Echo({
-      broadcaster: 'pusher',
-      key: '02ba44eb9676739d361f',
-      wsHost: window.location.hostname,
-      cluster: 'eu',
-      wsPort: 6001,
-      forceTLS: false,    // Important Line
-      disableStats: true,
-      enabledTransports: ['ws']
-    });
-    echo.channel('chat')
-      .listen('ChatEvent', (res: any) => {
-        console.log('Chat Event Data : ', res);
-      });
-
-
     // Get all the products and save the first 4 products from each category
     this.products.getProducts().subscribe((data:any) => {
       this.allProduct = data;

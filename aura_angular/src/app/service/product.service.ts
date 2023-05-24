@@ -8,8 +8,8 @@ import { Product } from 'src/app/Models/products/products.module';
 })
 export class ProductService {
 
-  private apiUrl = 'http://localhost:8000/api/product';
-  //private apiUrl = 'http://aurabe.battlecats02.games/api/product';
+  //private apiUrl = 'http://localhost:8000/api/product';
+  private apiUrl = 'http://be.auras.social/api/product';
 
   constructor(private http: HttpClient) { }
 
@@ -23,11 +23,11 @@ export class ProductService {
   }
 
   editProduct(product: any) {
-    return this.http.post('http://localhost:8000/api/editProduct', product);
+    return this.http.post('http://be.auras.social/api/editProduct', product);
   }
 
   deleteProduct(id: any) {
-    return this.http.post('http://localhost:8000/api/deleteProduct', id);
+    return this.http.post('http://be.auras.social/api/deleteProduct', id);
   }
 
 }

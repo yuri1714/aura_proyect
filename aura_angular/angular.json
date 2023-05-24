@@ -28,7 +28,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/js/pusher.min.js"
+              "src/assets/js/pusher.min.js",
+              "src/assets/scroll-bottom.js"
             ]
           },
           "configurations": {

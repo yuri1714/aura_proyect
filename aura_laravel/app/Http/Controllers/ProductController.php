@@ -14,7 +14,6 @@ class ProductController extends Controller
 
     /**
      * Display a listing of the resource.
-     * despliega una lista del recurso
      */
     public function index()
     {
@@ -23,7 +22,6 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * Store crea un nuevo recurso en el almacenamiento
      */
     public function store(Request $request)
     {
@@ -51,7 +49,7 @@ class ProductController extends Controller
         if ($request->hasFile('img')) {
             $img_name = $request->user_id . '_' . $id_product;
             $image->move(public_path('/image'), $img_name . '.png');
-            $products->img = 'http://localhost:8000/api/image/' . $img_name . '.png';
+            $products->img = 'http://be.auras.social/api/image/' . $img_name . '.png';
             $products->save();
             return response()->json($img_name . ' img added');
         } else {
@@ -61,7 +59,6 @@ class ProductController extends Controller
 
     /**
      * Display the specified resource.
-     * despliega un recurso en especifico
      */
     public function show(Products $products)
     {
@@ -94,7 +91,7 @@ class ProductController extends Controller
             $img_name = $request->user_id . '_' . $request->id . 'v=' . $randomNumber . '.png';
             File::delete(public_path('/image'), $img_name);
             $image->move(public_path('/image'), $img_name);
-            $product->img = 'http://localhost:8000/api/image/' . $img_name;
+            $product->img = 'http://be.auras.social/api/image/' . $img_name;
             $product->update();
             return response()->json($img_name . ' img added');
         } else {
@@ -106,7 +103,6 @@ class ProductController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * Elimina un recursoe en especifico del almacenamieto
      */
     public function destroy(Request $request)
     {

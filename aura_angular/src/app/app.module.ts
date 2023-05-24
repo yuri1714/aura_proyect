@@ -27,6 +27,7 @@ import { FilterUsersPipe } from './pipes/filter-users.pipe';
 import { EditProfileComponent } from './component/edit-profile/edit-profile.component';
 import { EditProductComponent } from './component/edit-product/edit-product.component';
 import { TermsConditionsComponent } from './component/terms-conditions/terms-conditions.component';
+import { ChatComponent } from './component/chat/chat.component';
 // import { AgmCoreModule } from '@agm/core';
 
 
@@ -52,6 +53,7 @@ import { TermsConditionsComponent } from './component/terms-conditions/terms-con
     EditProfileComponent,
     EditProductComponent,
     TermsConditionsComponent,
+    ChatComponent,
 
   ],
   imports: [
