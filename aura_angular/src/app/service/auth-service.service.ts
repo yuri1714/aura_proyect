@@ -11,14 +11,13 @@ export class AuthServiceService {
   constructor(private http: HttpClient) { }
   checkIsLogged!: boolean;
   actualUser: any;
-
   /**
    * Checks if the user is logged in
-   * @param check is a value that validates whether or not the user is logged in.
-   * @returns 
-   */
+   *  @param check
+   */ 
   isLoggedIn(check: boolean): boolean {
-    
+
+    // Here you could add the necessary logic to check if the user is logged in.
     if(check){
       this.checkIsLogged = true;
     }else{
@@ -30,26 +29,23 @@ export class AuthServiceService {
   }
 
   /**
-   * It is a function that validates if the user logging in is similar to a user in the database
-   * @param username name of user
-   * @param password  Pass of user
-   * @param checkName value of connfirm if username its similar
-   * @param checkPassword value of confim if password its similar 
-   * @returns is valid 
+   * Log in with the provided credentials
+   * @param username
+   * @param password
+   * @param checkName
+   * @param checkPassword
    */
   login(username: string, password: string, checkName: string, checkPassword: string): boolean {
-    // Aquí podrías agregar la lógica necesaria para iniciar sesión con las credenciales proporcionadas
-    // En este ejemplo, simplemente se devuelve true si las credenciales son correctas
+
     const isValid = username === checkName && password === checkPassword;
     return isValid;
   }
 
-  // Cierra la sesión del usuario actual
+  /**
+   * Logs out the current user
+   */
   logout(): void {
-    // Aquí podrías agregar la lógica necesaria para cerrar la sesión del usuario actual
-    // En este ejemplo, simplemente se establece la variable `isLoggedIn` en falso
 
     this.isLoggedIn(false);
   }
-
 }

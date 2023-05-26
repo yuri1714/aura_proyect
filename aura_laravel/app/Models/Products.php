@@ -17,4 +17,13 @@ class Products extends Model
         'description',
         'user_id',
     ];
+
+    public function categories(){
+        return $this->hasOne(Categories::class);
+    }
+
+    public function users(){
+        return $this->belongsTo(Users::class);
+    }
+
 }

@@ -4,11 +4,9 @@ import {
   FormControl,
   FormGroup,
   Validators,
-  ReactiveFormsModule
+
 } from '@angular/forms';
-import { AuthServiceService } from 'src/app/service/auth-service.service';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { CategoriesService } from 'src/app/service/categories.service';
 import { ProductService } from 'src/app/service/product.service';
@@ -20,6 +18,7 @@ import { Product } from 'src/app/Models/products/products.module';
   styleUrls: ['./edit-product.component.css']
 })
 export class EditProductComponent implements OnInit {
+
   //IMG
   selectedFile!: File;
   imageUrl!: string;
@@ -38,7 +37,6 @@ export class EditProductComponent implements OnInit {
 
 
   constructor(
-    private http: HttpClient,
     private categories: CategoriesService,
     private productService: ProductService,
     private router: Router,
@@ -46,14 +44,18 @@ export class EditProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     // Used to get the route id
     this.product_id = this.Aroute.snapshot.paramMap.get('id');
+
     // Take all categoryes from DB
     this.categories.getCategories().subscribe((data: any) => {
       this.allCategories = data;
     });
+
     // Entering the product service
     this.productService.getProducts().subscribe((data: Product[]) => {
+
       // assigns the corresponding product to the variable this.product_selected.
       this.allProducts = data;
       for (let index = 0; index < this.allProducts.length; index++) {
@@ -62,6 +64,7 @@ export class EditProductComponent implements OnInit {
           break;
         }
       }
+
       // creates a form called editProduct containing fields for editing the attributes of a selected product
       this.editProduct = new FormGroup({
         title: new FormControl(this.product_selected.title, [Validators.required, Validators.maxLength(50)]),
@@ -82,7 +85,6 @@ export class EditProductComponent implements OnInit {
 
     if (fileInput.files != null) {
       this.selectedFile = fileInput.files[0];
-      console.log(this.selectedFile);
 
       //Image validations
       if (this.selectedFile) {
@@ -105,10 +107,12 @@ export class EditProductComponent implements OnInit {
         }
       }
     } else {
+
       // Error message if it is not file selected
       console.error('You need to select a product image.');
     }
   }
+
   /**
    * This function is for update the product
    */
@@ -125,17 +129,7 @@ export class EditProductComponent implements OnInit {
     formData.append('user_id', id_user.id);
 
     this.productService.editProduct(formData).subscribe({
-      next: (data) => {
-        console.log(data);
-        console.log('Product added!');
-      },
-      error: (err) => {
-        console.log('error: ', err);
-      },
     });
     this.router.navigate(['/ownprofile']);
-
   }
-
-
 }

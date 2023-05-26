@@ -11,10 +11,6 @@ export class CategoriesService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * function from call to categori database
-   * @returns all categories in the database
-   */
   getCategories() {
     return this.http.get(this.apiUrl);
   }

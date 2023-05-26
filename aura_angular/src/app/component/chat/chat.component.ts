@@ -1,11 +1,11 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   Validators,
   ReactiveFormsModule
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Models/user/user.module';
 import { ChatService } from 'src/app/service/chat.service';
 import { UserService } from 'src/app/service/user.service';
@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit{
     private Aroute: ActivatedRoute,
     private chatService: ChatService,
     private userService: UserService,
-    private renderer: Renderer2
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -42,47 +42,44 @@ export class ChatComponent implements OnInit{
     this.idClient = JSON.parse(localStorage.getItem('actualUser') || '[]').id;
     this.idDest = this.Aroute.snapshot.paramMap.get('id');
 
-    console.log('ID logged user: ' + this.idClient);
-    console.log('ID chat user: ' + this.idDest);
+    // If the user you are trying to chat its you, redirect to home
+    if(this.idClient == this.idDest){
+      this.router.navigate(['/']);
+    }
     const info = {
       user_dest: this.idDest,
       user_logged: this.idClient,
     }
     this.chatService.getMessages(info).subscribe({
       next: (data) => {
-        console.log('messages get!');
         this.ownMessages = data;
-        console.log(this.ownMessages);
-
       },
-      error: (err) => {
-        console.log('error: ', err);
-      },
+      error: (err) => {},
     });
 
-    console.log(window.location.hostname);
-    this.ws = new WebSocket('ws://node.auras.social:6001/');
+    // Creation of the WebSocket connection
+    this.ws = new WebSocket('ws://node.auras.social:6001/'); 
 
+    // When the connection opens:
     this.ws.addEventListener("open", (event:any) => {
-      console.log("open");
       this.ws.send(JSON.stringify({action: 'id', idUser: this.idClient}))
     });
 
+    // When there is a error:
     this.ws.addEventListener("error", (event:any) => {
-      console.log("WebSocket error: ", event);
     });
 
+    // When gets a message from the node
     this.ws.addEventListener("message", (event:any) => {
-      console.log("del servidor: " + event.data);
 
       this.ownMessages.push({dest_user: this.idClient, sender_user: this.idDest, message: event.data});
-
+      
     });
-
+    // When the connection closes:
     this.ws.addEventListener("close", (event:any) => {
-      console.log("close");
     });
 
+    // Code from the JavaScript file to put the scroll bar to the very bottom
     this.scrollContainer = document.getElementById('scrollContainer');
     if(this.scrollContainer){
       this.scrollContainer.scrollTop = this.scrollContainer.scrollHeight;
@@ -91,6 +88,7 @@ export class ChatComponent implements OnInit{
       });
     }
 
+    // Get the info of the other user you are chatting
     this.getOtherUser();
   }
 
@@ -99,28 +97,20 @@ export class ChatComponent implements OnInit{
    */
   send_message(): void{
     if(this.formChat.value.message && !this.formChat.invalid){
-      console.log(this.formChat.value.message);
 
     this.ws.send(JSON.stringify({action: 'message', sender: this.idClient, dest: this.idDest, text: this.formChat.value.message }));
     this.ownMessages.push({dest_user: this.idDest, sender_user: this.idClient, message: this.formChat.value.message});
-
+    
     // Create chat conexion with the two users
     const info = {
-      id_user1: this.idClient,
-      id_user2: this.idDest
+      user1: this.idClient,
+      user2: this.idDest
     }
-    this.chatService.startChat(info).subscribe({
-      next: (data) => {
-        console.log('messages get!');
-      },
-      error: (err) => {
-        console.log('error: ', err);
-      },
-    });
-
+    this.chatService.startChat(info).subscribe({    });
+    
     }else{
       this.errorMessage = 'messages error';
-
+      
     }
     this.formChat.controls['message'].setValue('');
   }
@@ -136,7 +126,7 @@ export class ChatComponent implements OnInit{
 
   /**
    * This function validate the messages to put an style or another.
-   * @param destUser ID of the destination user
+   * @param destUser ID of the destination user 
    * @returns string of the style class
    */
   getMessageStyle(destUser: any): string{
@@ -155,14 +145,13 @@ export class ChatComponent implements OnInit{
         this.other_user = data;
       },
       error: (err) => {
-        console.log('error: ', err);
       },
     });
   }
 
   /**
    * This function searchs if the messages is your or not to put the icon correctly.
-   * @param destUser ID of the destination user
+   * @param destUser ID of the destination user 
    * @returns string of the icon url
    */
   getIconImg(destUser: any): string{
@@ -174,13 +163,13 @@ export class ChatComponent implements OnInit{
       }else {
         return '';
       }
-
+      
     }
   }
 
   /**
    * This function validates to show the icon or not.
-   * @param destUser ID of the destination user
+   * @param destUser ID of the destination user 
    * @returns string of the icon style
    */
   getImgStyle(destUser: any): string{
@@ -199,7 +188,7 @@ export class ChatComponent implements OnInit{
     if(this.formChat.invalid){
       return 'bg-gray-600';
     }else {
-      return 'bg-blue-400 hover:bg-blue-500'
+      return 'bg-blue-400 hover:bg-blue-500 [box-shadow:0_10px_0_0_#60a5fa,0_15px_0_0_#1b70f841] hover:[box-shadow:0_10px_0_0_#3b82f6,0_15px_0_0_#1b70f841]'
     }
   }
 

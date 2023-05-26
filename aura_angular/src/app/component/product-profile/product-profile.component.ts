@@ -22,12 +22,10 @@ export class ProductProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private products: ProductService,
     private userService: UserService,
-    private authServer: AuthServiceService,
     private like: LikeProductService,
     private router: Router,
-    private elementRef: ElementRef
   ) {
-
+    
   }
 
   id_product_selected: any;
@@ -51,10 +49,10 @@ export class ProductProfileComponent implements OnInit {
     // Gets the id of the route to know the id of the product.
     this.id_product_selected = this.route.snapshot.paramMap.get('id');
     const userLogged = JSON.parse(localStorage.getItem('actualUser') || '[]');
-    if (userLogged.role) {
+    if(userLogged.role){
       this.loggedRole = userLogged.role;
     }
-
+   
     /**
      * Get all products of the DDBB and gets the information of the product selected.
      * Also validates the owner of the product to know if it is the same that the user logged.
@@ -67,13 +65,14 @@ export class ProductProfileComponent implements OnInit {
           break;
         }
       }
+
       const user_id = {
         user_id: this.product_selected.user_id,
       };
+
       this.userService.getUserOwner(user_id).subscribe({
         next: (data: User) => {
           this.user_owner_info = data;
-          console.log(this.user_owner_info);
 
           if (this.user_owner_info.id == userLogged.id) {
             this.selected_is_the_same = true;
@@ -82,14 +81,13 @@ export class ProductProfileComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.log('error: ', err);
         },
       });
-
+      
       // Declaration of the latitude and longitude of the product.
       this.lat = this.product_selected.lat
       this.lng = this.product_selected.lng
-
+      
       // Creation of the map with the exact location of the product.
       const map = L.map('map').setView([this.lat, this.lng], 13);
 
@@ -98,7 +96,7 @@ export class ProductProfileComponent implements OnInit {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
         maxZoom: 18,
       }).addTo(map);
-
+    
       // Adds a control to select the locations
       this.marker = L.marker([this.lat, this.lng], {
         draggable: false,
@@ -110,10 +108,9 @@ export class ProductProfileComponent implements OnInit {
       id_user: userLogged.id,
       id_product: this.id_product_selected,
     };
-    console.log(productLike);
 
     this.like.searchLikeProduct(productLike).subscribe((data) => {
-      if (data == 1) {
+      if(data == 1){
         this.heart_color = 'text-red-500 bg-red-200';
       } else {
         this.heart_color = 'text-gray-500 bg-gray-200';
@@ -126,7 +123,7 @@ export class ProductProfileComponent implements OnInit {
    * not logged then it redirects to the login page.
    */
   saveLikeProduct() {
-    if (this.heart_color == 'text-gray-500 bg-gray-200') {
+    if(this.heart_color == 'text-gray-500 bg-gray-200'){
       this.heart_color = 'text-red-500 bg-red-200';
     } else {
       this.heart_color = 'text-gray-500 bg-gray-200';
@@ -137,10 +134,8 @@ export class ProductProfileComponent implements OnInit {
         id_user: userLogged.id,
         id_product: this.id_product_selected,
       };
-      console.log(productLike);
 
       this.like.addLikeProduct(productLike).subscribe((data) => {
-        console.log('addlike: ' + data);
       });
     } else {
       this.router.navigate(['/login']);
@@ -153,26 +148,24 @@ export class ProductProfileComponent implements OnInit {
    * @param id of the user clicked
    */
   setUserIds(id: number): void {
-    if (localStorage.getItem('isLoggedIn') == 'true') {
+    if(localStorage.getItem('isLoggedIn') == 'true'){
       this.id_selected_user = id;
-      console.log('ID SELECTED: ' + this.id_selected_user);
-      const userLogged = JSON.parse(localStorage.getItem('actualUser')!);
-      this.id_logged_user = userLogged.id;
-      console.log(this.id_logged_user);
-      if (this.id_selected_user == this.id_logged_user) {
-        this.selected_is_the_same = true;
-      } else {
-        this.selected_is_the_same = false;
-      }
-      if (this.selected_is_the_same) {
-        this.router.navigate(['/ownprofile']);
-      } else {
-        this.router.navigate(['/profile/', id]);
-      }
+    const userLogged = JSON.parse(localStorage.getItem('actualUser')!);
+    this.id_logged_user = userLogged.id;
+    if (this.id_selected_user == this.id_logged_user) {
+      this.selected_is_the_same = true;
+    } else {
+      this.selected_is_the_same = false;
+    }
+    if(this.selected_is_the_same){
+      this.router.navigate(['/ownprofile']);
+    } else {
+      this.router.navigate(['/profile/', id]);
+    }
     } else {
       this.router.navigate(['/login']);
     }
-
+    
   }
 
   /**
@@ -181,15 +174,14 @@ export class ProductProfileComponent implements OnInit {
    * @param id_product_selected ID of the product that the user clicks
    */
   deleteProduct(id_product_selected: any) {
-    if (confirm('Do you want to delete this product?')) {
+    if(confirm('Do you want to delete this product?')){
       const id_product = {
         id: id_product_selected,
       };
       this.products.deleteProduct(id_product).subscribe((data) => {
-        console.log(data);
       });
       this.router.navigate(['/']);
     }
-
+    
   }
 }

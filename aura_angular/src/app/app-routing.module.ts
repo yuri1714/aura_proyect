@@ -13,7 +13,6 @@ import { UserCatalogueComponent } from './component/user-catalogue/user-catalogu
 import { OwnProfileComponent } from './component/own-profile/own-profile.component';
 import { EditProductComponent } from './component/edit-product/edit-product.component';
 import { EditProfileComponent } from './component/edit-profile/edit-profile.component';
-import { TermsConditionsComponent } from './component/terms-conditions/terms-conditions.component';
 import { ChatComponent } from './component/chat/chat.component';
 
 const routes: Routes = [
@@ -87,10 +86,6 @@ const routes: Routes = [
     path: 'chat/:id',
     component: ChatComponent,
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'terms-conditions',
-    component: TermsConditionsComponent
   },
   {
     path: '**',

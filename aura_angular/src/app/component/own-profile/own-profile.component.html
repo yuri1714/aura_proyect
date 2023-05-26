@@ -21,8 +21,8 @@
       </div>
       <div *ngIf="selected_is_the_same || this.selected_user.role != 'admin'">
         <button (click)="deleteUsers()" type="button"
-          class="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded mt-3">
-          <i class="">Delete account</i>
+          class="deleteButton flex focus:outline-none mt-3">
+          <svg viewBox="0 0 448 512" class="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>
         </button>
       </div>
     </div>
@@ -34,19 +34,19 @@
   <div class=" justify-center">
     <div class="columns-3 text-center">
       <div>
-        <button id="productos" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
+        <button id="productos" class="button2 bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
           (click)="producCheck()">
           Products
         </button>
       </div>
       <div *ngIf="selected_is_the_same">
-        <button id="favoritos" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
+        <button id="favoritos" class="button2 bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
           (click)="favoritesCheck()">
           Favorites
         </button>
       </div>
       <div *ngIf="selected_is_the_same">
-        <button id="chats" class="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
+        <button id="chats" class="button2 bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-0 rounded-full"
           (click)="chatCheck()">
           Chats
         </button>
@@ -87,21 +87,21 @@
 
 <!--favorites-->
 <div *ngIf="selected_is_the_same">
-  <div *ngIf="favoritesProfile == true">
+  <div *ngIf="favoritesProfile">
 
     <div class="mt-10 py-10 border-t border-blueGray-200 text-center max-w-screen-xl mx-auto p-4">
       <div class=" justify-center">
         <div class="columns-2">
           <div>
             <button
-              class="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              class="button2 w-full py-2 px-4 text-2xl font-bold text-black"
               (click)="favsProducts()">
               Products
             </button>
           </div>
           <div>
             <button
-              class="w-full bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              class="button2 w-full py-2 px-4 text-2xl text-black font-bold"
               (click)="favsUsers()">
               Users
             </button>
@@ -166,9 +166,9 @@
 
 <!--chats-->
 <div *ngIf="selected_is_the_same">
-  <div *ngIf="chatProfile == true">
+  <div *ngIf="chatProfile == true" class="max-w-screen-xl mx-auto mb-5">
 <!-- Chat -->
-    <tr *ngFor="let users of startedChats" class="bg-white border-b hover:bg-gray-50">
+    <tr *ngFor="let users of startedChats" class="bg-white border-b hover:bg-gray-50 ">
       <th [routerLink]="['/chat', users.id]" scope="row"
         class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
         <img class="w-10 h-10 rounded-full cursor-pointer" src="{{users.icon}}" alt="Jese image">

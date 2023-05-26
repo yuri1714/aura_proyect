@@ -78,7 +78,7 @@ class UserController extends Controller
         if ($request->hasFile('img')) {
             $img_name = $id_user . '_icon.png';
             $image->move(public_path('/image'), $img_name);
-            $user->icon = 'http://be.auras.social/api/image/' . $img_name;
+            $user->icon = 'http://localhost:8000/api/image/' . $img_name;
             $user->save();
             return response()->json($img_name . ' img added');
         } else {
@@ -130,7 +130,7 @@ class UserController extends Controller
             $img_name = $request->id . '_icon' . 'v=' . $randomNumber .  '.png';
             File::delete(public_path('/image'), $img_name);
             $image->move(public_path('/image'), $img_name);
-            $user->icon = 'http://be.auras.social/api/image/' . $img_name;
+            $user->icon = 'http://localhost:8000/api/image/' . $img_name;
             $user->update();
             return response()->json($img_name . ' img added');
         } else {

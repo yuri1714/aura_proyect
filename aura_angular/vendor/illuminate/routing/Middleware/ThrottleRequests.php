@@ -55,7 +55,7 @@ class ThrottleRequests
      *
      * @named-arguments-supported
      */
-    public static function with($maxAttempts = 60, $decayMinutes = 1, $prefix = '')
+    public static function with($maxAttempts = 200, $decayMinutes = 1, $prefix = '')
     {
         return static::class.':'.implode(',', func_get_args());
     }
@@ -72,7 +72,7 @@ class ThrottleRequests
      *
      * @throws \Illuminate\Http\Exceptions\ThrottleRequestsException
      */
-    public function handle($request, Closure $next, $maxAttempts = 60, $decayMinutes = 1, $prefix = '')
+    public function handle($request, Closure $next, $maxAttempts = 200, $decayMinutes = 1, $prefix = '')
     {
         if (is_string($maxAttempts)
             && func_num_args() === 3

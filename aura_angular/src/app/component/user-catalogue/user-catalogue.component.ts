@@ -12,17 +12,15 @@ import { LikeProductService } from 'src/app/service/like-product.service';
 export class UserCatalogueComponent implements OnInit{
   
   allUsers!: User[];
-  searchTerm: string = '';
+  searchTermUsers: string = '';
 
 constructor(private userService: UserService,){} 
-  
+// On init the component, You gonna get all the users and show on html.
 ngOnInit(): void {
   this.userService.getUsersForAdmin().subscribe({
     next: (data: User[]) =>{
       this.allUsers = data;
-      console.log('users get!');
     }, error: err =>{
-      console.log('users: ', err);
     }
   });
 }

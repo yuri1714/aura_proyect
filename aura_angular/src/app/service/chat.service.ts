@@ -12,27 +12,23 @@ export class ChatService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Function from obtain chats
-   * @param info Send the values to obtain the respons 
-   * @returns information of the database 
+   * Displays all messages in a chat between two users
+   * @param info
+   * @return messages between two users
    */
   getMessages(info: any){
     return this.http.post(this.apiUrl, info);
   }
 
   /**
-   * 
-   * @param info ID of users talking to each other
-   * @returns a new chat between two users
+   * Receives the IDs of the two users who want to start a conversation and creates a new chat channel.
+   * @param info
+   * @return A new chat channel
    */
   startChat(info: any){
     return this.http.post('http://be.auras.social/api/createChat', info);
   }
 
-  /**
-   * Function from search and show chats
-   * @returns All chats between two users
-   */
   getAllChats(){
     return this.http.get('http://be.auras.social/api/getChats');
   }

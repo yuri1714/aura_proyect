@@ -12,35 +12,31 @@ export class LikeProductService {
   constructor(private http: HttpClient) { }
 
   /**
-   * function to call the database information from the likeProducts
-   * @returns all database information 
+   * Function that displays the products that the user has liked from the LikeProducts table.
    */
   getLikeProducts(){
     return this.http.get(this.apiUrl);
   }
 
   /**
-   * Function to search the like products of the user
-   * @param info user_id of the user clicks on a product and the id_product of the product the user clicked on.
-   * @returns  
+   * Function that searches the parameter info for the product that the user has clicked as a favourite.
+   * @param info
    */
   searchLikeProduct(info: any){
     return this.http.post('http://be.auras.social/api/searchLike', info);
   }
 
   /**
-   * Function from add news likeProducts
-   * @param ID 
-   * @returns 
+   * Function that adds a new Favourite product based on the parameter you pass to it.
+   * @param likeProduct
    */
   addLikeProduct(likeProduct: any) {
     return this.http.post(this.apiUrl, likeProduct);
   }
 
   /**
-   * Function for detele a one like product
-   * @param id_like_product 
-   * @returns the product like eliminator of the user's favorites part
+   * function, which eliminates the favourite products thanks to the parameter called 
+   * @param id_like_product
    */
   deleteLikeProduct(id_like_product: any){
     return this.http.post('http://be.auras.social/api/deleteLikeProduct', id_like_product);

@@ -16,10 +16,11 @@ export class RegisterComponent implements OnInit {
   validateImgExt: boolean = false;
   validateImgSize: boolean = false;
 
-  constructor(public userService: UserService,
+  constructor(public userService: UserService, 
               private router: Router) { }
-
+  
   ngOnInit(): void {
+    //All The validators of form:
     this.validateImgExt = false;
     this.validateImgSize = false;
 
@@ -58,13 +59,13 @@ export class RegisterComponent implements OnInit {
         Validators.requiredTrue
       ])
     })
-
+    
   }
 
   /**
-   * function for validate the age from a user
+   * Function that checks whether the user wishing to register is over 18 years of age.
    * @param control
-   * @returns true if the age its less than 18
+   * @return  null or true
    */
   ageValidator(control: any) {
     const birthdate = new Date(control.value);
@@ -80,6 +81,10 @@ export class RegisterComponent implements OnInit {
     return null;
   }
 
+  /**
+   * Function that checks that the user was not born on a date later than the current date.
+   * @param control
+   */
   birthdateFutureValidator(control: any) {
     const birthdate = new Date(control.value);
     const today = new Date();
@@ -88,6 +93,7 @@ export class RegisterComponent implements OnInit {
     }
     return null;
   }
+
   //OnClick do this function:
   submit() {
 
@@ -100,23 +106,20 @@ export class RegisterComponent implements OnInit {
     formData.append('img', this.selectedFile!);
 
     this.userService.addUser(formData).subscribe((response) => {
-      console.log(response);
       this.router.navigateByUrl('/login');
     }, (error) => {
-      console.log(error);
     });
   }
 
   /**
-   * Function to save and validate a icon of user
-   * @param event its a image select of form html
+   * Function that inserts the image selected by the user into the database.
+   * @param event
    */
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 
     if (fileInput.files != null) {
       this.selectedFile = fileInput.files[0];
-      console.log(this.selectedFile);
       if(this.selectedFile){
         if(!(this.selectedFile.type == 'image/jpg' || this.selectedFile.type == 'image/jpeg' || this.selectedFile.type == 'image/png')){
           this.validateImgExt = true;
@@ -136,8 +139,9 @@ export class RegisterComponent implements OnInit {
           this.myform.controls['img'].setErrors(null);
         }
       }
-
+      
     } else {
+
       // Error message if it is not file selected
       console.error('You need to select a product image.');
     }

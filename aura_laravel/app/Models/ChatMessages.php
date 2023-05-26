@@ -15,4 +15,8 @@ class ChatMessages extends Model
         'sender_user',
         'message'
     ];
+
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
 }

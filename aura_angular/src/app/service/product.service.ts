@@ -18,7 +18,6 @@ export class ProductService {
   }
 
   addProduct(product: any) {
-    console.log(product);
     return this.http.post(this.apiUrl, product);
   }
 

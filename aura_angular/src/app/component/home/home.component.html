@@ -5,17 +5,17 @@
       <h1 class="text-4xl mb-5">Games</h1>
       <div class="xl:columns-4 mb-5 lg:columns-2 md:columns-2">
         <div *ngFor="let product of fourGames" class="container mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
-          <div [routerLink]="['/product-profile', product.id]">
-            <div class="flex justify-center items-center">
+          <div >
+            <div [routerLink]="['/product-profile', product.id]" class="flex justify-center items-center cursor-pointer">
                 <img class="rounded-xl h-56" src="{{ product.img }}" />
             </div>
             <div class="flex justify-between items-center">
                 <div class="w-36">
                     <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
-                    <p class="mt-2">{{ product.price }}€</p>
+                    <p class="mt-5 font-bold text-xl">{{ product.price }}€</p>
                 </div>
                 <div>
-                    <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
+                    <button [routerLink]="['/chat', product.user_id]" class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
                 </div>
             </div>
           </div>
@@ -25,16 +25,16 @@
       <div class="xl:columns-4 mb-5 lg:columns-2 md:columns-2">
         <div *ngFor="let product of fourCars" class="container mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
           <div [routerLink]="['/product-profile', product.id]">
-            <div class="flex justify-center items-center">
+            <div class="flex justify-center items-center cursor-pointer">
                 <img class="rounded-xl h-52" src="{{ product.img }}" />
             </div>
             <div class="flex justify-between items-center">
                 <div class="w-36">
                     <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
-                    <p class="mt-2">{{ product.price }}€</p>
+                    <p class="mt-5 font-bold text-xl">{{ product.price }}€</p>
                 </div>
                 <div>
-                    <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
+                    <button [routerLink]="['/chat', product.user_id]" class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
                 </div>
             </div>
           </div>
@@ -43,17 +43,17 @@
       <h1 class="text-4xl mb-5">Books</h1>
       <div class="xl:columns-4 mb-5 lg:columns-2 md:columns-2">
         <div *ngFor="let product of fourBooks" class="container mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
-          <div [routerLink]="['/product-profile', product.id]">
-            <div class="flex justify-center items-center">
+          <div >
+            <div [routerLink]="['/product-profile', product.id]" class="flex justify-center items-center cursor-pointer">
                 <img class="rounded-xl h-52" src="{{ product.img }}" />
             </div>
             <div class="flex justify-between items-center">
                 <div class="w-36">
                     <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
-                    <p class="mt-2">{{ product.price }}€</p>
+                    <p class="mt-5 font-bold text-xl">{{ product.price }}€</p>
                 </div>
                 <div>
-                    <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
+                    <button [routerLink]="['/chat', product.user_id]" class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
                 </div>
             </div>
           </div>
@@ -62,17 +62,17 @@
       <h1 class="text-4xl mb-5">Series</h1>
       <div class="xl:columns-4 mb-5 lg:columns-2 md:columns-2">
         <div *ngFor="let product of fourSeries" class="container mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
-          <div [routerLink]="['/product-profile', product.id]">
-            <div class="flex justify-center items-center">
+          <div>
+            <div [routerLink]="['/product-profile', product.id]" class="flex justify-center items-center cursor-pointer">
                 <img class="rounded-xl h-52" src="{{ product.img }}" />
             </div>
             <div class="flex justify-between items-center">
                 <div class="w-36">
                     <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
-                    <p class="mt-2">{{ product.price }}€</p>
+                    <p class="mt-5 font-bold text-xl">{{ product.price }}€</p>
                 </div>
                 <div>
-                    <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
+                    <button [routerLink]="['/chat', product.user_id]" class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
                 </div>
             </div>
           </div>
@@ -81,24 +81,24 @@
       <h1 class="text-4xl mb-5">Sports</h1>
       <div class="xl:columns-4 mb-5 lg:columns-2 md:columns-2">
         <div *ngFor="let product of fourSports" class="container mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-96">
-          <div [routerLink]="['/product-profile', product.id]">
-            <div class="flex justify-center items-center">
+          <div >
+            <div [routerLink]="['/product-profile', product.id]" class="flex justify-center items-center cursor-pointer">
                 <img class="rounded-xl h-52" src="{{ product.img }}" />
             </div>
             <div class="flex justify-between items-center">
                 <div class="w-36">
                     <h2 class="mt-5 text-xl font-semibold">{{ product.title }}</h2>
-                    <p class="mt-2">{{ product.price }}€</p>
+                    <p class="mt-5 font-bold text-xl">{{ product.price }}€</p>
                 </div>
                 <div>
-                    <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
+                    <button [routerLink]="['/chat', product.user_id]" class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
                 </div>
             </div>
           </div>
         </div>
       </div>
       <div class="flex justify-center items-center">
-        <button [routerLink]="['/catalogue']" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
+        <button [routerLink]="['/catalogue']" type="submit" class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">
           View More...
         </button>
       </div>

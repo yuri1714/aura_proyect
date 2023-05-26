@@ -9,7 +9,7 @@ export class PriceFilterComponent {
   @Output() priceRangeChange = new EventEmitter<number[]>();
   minPrice: number = 0;
   maxPrice: number = 5000;
-  rangeValue: number = 0; // Nueva propiedad con valor inicial de 0
+  rangeValue: number = 0;
 
   onPriceRangeChange() {
     const priceRange = [this.minPrice + this.rangeValue, this.maxPrice];

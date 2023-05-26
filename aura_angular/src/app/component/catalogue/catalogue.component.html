@@ -39,7 +39,7 @@
 <div class="xl:columns-4 mb-5 lg:columns-2 md:columns-2 mt-20 sm:justify-center sm:items-center">
   <div *ngFor="let product of allProducts | filter: searchTerm |categoryFilter: formCategory.value.category || ''  | priceFilter: priceRange | paginate: { itemsPerPage: 8, currentPage: page }" 
         class="container mx-auto p-9 bg-white max-w-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl mb-10 transition duration-300 h-fit">
-    <div [routerLink]="['/product-profile', product.id]">
+            <div [routerLink]="['/product-profile', product.id]">
       <div class="flex justify-center items-center">
           <img class="rounded-xl h-52" src="{{ product.img }}" />
       </div>
@@ -50,9 +50,6 @@
               <p class="product-category text-gray-400">{{ product.category }}</p>
               <p class="product-description h-12 overflow-auto">{{ product.description }}</p>
           </div>
-          <!-- <div>
-              <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
-          </div> -->
       </div>
       <div class="mt-5">
         <button class="z-0 relative text-white text-md font-semibold bg-blue-400 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-500 transform-gpu hover:scale-110">Contact Owner</button>
@@ -60,12 +57,12 @@
     </div>
   </div>
 </div>
+
 <div class="flex justify-center">
   <div class="pagination">
     <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
 </div>
-
 
 
 

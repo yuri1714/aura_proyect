@@ -34,7 +34,7 @@ export class ProfilesComponent implements OnInit {
     private route: Router,
     private likeUser: LikeUserService,
     private likeProducts: LikeProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.id_selected_user = this.Aroute.snapshot.paramMap.get('id');
@@ -43,10 +43,9 @@ export class ProfilesComponent implements OnInit {
       user_clicks: userLogged.id,
       user_saved: this.id_selected_user,
     };
-    console.log(userLike);
 
     this.likeUser.searchLikeUser(userLike).subscribe((data) => {
-      if(data == 1){
+      if (data == 1) {
         this.heart_color = 'text-red-500 bg-red-200';
       } else {
         this.heart_color = 'text-gray-500 bg-gray-200';
@@ -56,14 +55,13 @@ export class ProfilesComponent implements OnInit {
     this.setAllProfileDataFromUser(this.id_selected_user);
 
     this.role_user = userLogged.role;
-    console.log(this.role_user);
   }
 
   /**
    * Function for call likeUsers for service
    */
   saveLikeUser() {
-    if(this.heart_color == 'text-gray-500 bg-gray-200'){
+    if (this.heart_color == 'text-gray-500 bg-gray-200') {
       this.heart_color = 'text-red-500 bg-red-200';
     } else {
       this.heart_color = 'text-gray-500 bg-gray-200';
@@ -73,7 +71,7 @@ export class ProfilesComponent implements OnInit {
       user_saved: this.id_selected_user,
     };
 
-    this.likeUser.addLikeUser(userLike).subscribe((response) => {});
+    this.likeUser.addLikeUser(userLike).subscribe((response) => { });
   }
 
   /**
@@ -85,110 +83,79 @@ export class ProfilesComponent implements OnInit {
 
   // Function to delete a user 
   deleteUsers() {
-    if(confirm('Do you want to delete your account and all your products?')){
+    if (confirm('Do you want to delete your account and all your products?')) {
+
       //Create variable to put the user id
-    const id = {
-      id: this.id_selected_user,
-    };
-    console.log(id);
+      const id = {
+        id: this.id_selected_user,
+      };
 
-    //This For is to delete all the products of the user
-    for (let index = 0; index < this.allProducts.length; index++) {
-      if (this.allProducts[index].user_id == this.id_selected_user) {
-        const id_prod = {
-          id: this.allProducts[index].id,
-        };
-        console.log(id_prod);
-        this.products.deleteProduct(id_prod).subscribe({
-          next: (data) => {
-            console.log('deleteProduct get!');
-          },
-          error: (err) => {
-            console.log('error: ', err);
-          },
-        });
-        
-        this.likeProducts.getLikeProducts().subscribe({
-          next: (data) => {
-            this.allLikeProducts = data;
-            console.log('likeProducts get!');
-            //Delete like products of user.
-            for (let index = 0; index < this.allLikeProducts.length; index++) {
-              if (this.allLikeProducts[index].id_user == this.id_selected_user || this.allLikeProducts[index].id_product == this.allProducts[index].id) {
-                const id_likeP = {
-                  id: this.allLikeProducts[index].id,
-                };
-                this.likeProducts.deleteLikeProduct(id_likeP).subscribe({
-                  next: (data) => {
-                    console.log('deleteLikeP get!');
-                  },
-                  error: (err) => {
-                    console.log('error: ', err);
-                  },
-                });
+      //This For is to delete all the products of the user
+      for (let index = 0; index < this.allProducts.length; index++) {
+        if (this.allProducts[index].user_id == this.id_selected_user) {
+          const id_prod = {
+            id: this.allProducts[index].id,
+          };
+          this.products.deleteProduct(id_prod).subscribe({
+          });
+
+          this.likeProducts.getLikeProducts().subscribe({
+            next: (data) => {
+              this.allLikeProducts = data;
+              //Delete like products of user.
+              for (let index = 0; index < this.allLikeProducts.length; index++) {
+                if (this.allLikeProducts[index].id_user == this.id_selected_user || this.allLikeProducts[index].id_product == this.allProducts[index].id) {
+                  const id_likeP = {
+                    id: this.allLikeProducts[index].id,
+                  };
+                  this.likeProducts.deleteLikeProduct(id_likeP).subscribe({
+                  });
+                }
               }
-            }
-          },
-          error: (err) => {
-            console.log('error: ', err);
-          },
-        });
+            },
+            error: (err) => {
+            },
+          });
 
-      }
-    }
-
-    this.likeUser.getLikeUsers().subscribe({
-      next: (data) => {
-        this.allLikeUsers = data;
-        console.log('deleteUser get!');
-
-        for (let index = 0; index < this.allLikeUsers.length; index++) {
-          if (this.allLikeUsers[index].user_clicks == this.id_selected_user || this.allLikeUsers[index].user_saved == this.id_selected_user) {
-            const id_like_user = {
-              id: this.allLikeUsers[index].id,
-            };
-            this.likeUser.deleteLikeUser(id_like_user).subscribe({
-              next: (data) => {
-                console.log('deleteLikeUser get!');
-              },
-              error: (err) => {
-                console.log('error: ', err);
-              },
-            });
-          }
         }
-      },
-      error: (err) => {
-        console.log('error: ', err);
-      },
-    });
+      }
 
-    //Function to delete the user
-    this.userService.deleteUser(id).subscribe({
-      next: (data) => {
-        console.log('deleteUser get!');
-      },
-      error: (err) => {
-        console.log('error: ', err);
-      },
-    });
+      this.likeUser.getLikeUsers().subscribe({
+        next: (data) => {
+          this.allLikeUsers = data;
 
-    this.route.navigate(['/user-catalogue']);
+          for (let index = 0; index < this.allLikeUsers.length; index++) {
+            if (this.allLikeUsers[index].user_clicks == this.id_selected_user || this.allLikeUsers[index].user_saved == this.id_selected_user) {
+              const id_like_user = {
+                id: this.allLikeUsers[index].id,
+              };
+              this.likeUser.deleteLikeUser(id_like_user).subscribe({
+              });
+            }
+          }
+        },
+        error: (err) => {
+        },
+      });
+
+      //Function to delete the user
+      this.userService.deleteUser(id).subscribe({
+      });
+
+      this.route.navigate(['/user-catalogue']);
     }
-    
-    
+
+
   }
 
   /**
-   *
+   *Function to get your ID and the ID of the user you are logged in to.
    * @param id
    */
   setUserIds(id: number): void {
     this.id_selected_user = id;
-    console.log('ID SELECTED: ' + this.id_selected_user);
     const userLogged = JSON.parse(localStorage.getItem('actualUser')!);
     this.id_logged_user = userLogged.id;
-    console.log(this.id_logged_user);
     if (this.id_selected_user == this.id_logged_user) {
       this.selected_is_the_same = true;
     } else {
@@ -206,14 +173,15 @@ export class ProfilesComponent implements OnInit {
     this.userService.getUserOwner(user_id).subscribe({
       next: (data: User) => {
         this.selected_user = data;
-        console.log('owner get!');
       },
       error: (err) => {
-        console.log('error: ', err);
       },
     });
   }
 
+  /**
+   * function to view the user's products
+   */
   getUserProducts(): void {
     this.products.getProducts().subscribe((prod: Product[]) => {
       this.allProducts = prod;

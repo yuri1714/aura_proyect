@@ -12,6 +12,7 @@ export class AppComponent {
   isLogged!:boolean;
   id_user_logged: any;
   user_icon_url!: string;
+  user_info: any;
 
   /**
    * Checks if the user is logged or not
@@ -37,6 +38,7 @@ export class AppComponent {
     const userLogged = JSON.parse(localStorage.getItem('actualUser')!);
     if(userLogged){
       this.user_icon_url = userLogged.icon;
+      this.user_info = userLogged;
       if(localStorage.getItem('isLoggedIn') == 'true' && userLogged.role == 'admin'){
         return false;
       }else{

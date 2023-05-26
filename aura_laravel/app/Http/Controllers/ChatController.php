@@ -32,10 +32,14 @@ class ChatController extends Controller
         $allChats = StartedChats::all();
 
         foreach ($allChats as $chat) {
-            if($chat->id_user1 == $newChat->id_user1 || $chat->id_user1 == $newChat->id_user2){
-                return $newChat;
-            } else if($chat->id_user2 == $newChat->id_user1 || $chat->id_user2 == $newChat->id_user2) {
-                return $newChat;
+            if($chat->user1 == $newChat->user1 || $chat->user1 == $newChat->user2){
+                if($chat->user2 == $newChat->user2 || $chat->user2 == $newChat->user1){
+                    return false;
+                }
+            } else if($chat->user2 == $newChat->user1 || $chat->user2 == $newChat->user2) {
+                if($chat->user1 == $newChat->user1){
+                    return false;
+                }
             }
         }
         $newChat->save();

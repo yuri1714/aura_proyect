@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
-import { User } from '../../Models/user/user.module';
 
 @Component({
   selector: 'app-edit-profile',
@@ -22,6 +21,7 @@ export class EditProfileComponent implements OnInit{
               private router: Router){}
 
   ngOnInit(): void {
+
     //Save the session in the Local storage
     this.actual_user = JSON.parse(localStorage.getItem('actualUser') || '[]');
     
@@ -45,8 +45,10 @@ export class EditProfileComponent implements OnInit{
     });
 
   }
+
   // When you click on the Edit button:
   submit(){
+
     // Here we are creating the FormData variable
     const formData = new FormData();
     // We add the fields to the new variable 
@@ -58,25 +60,25 @@ export class EditProfileComponent implements OnInit{
 
     // And we send it to the server to be changed in the database
     this.userService.updateUser(formData).subscribe((response) => {
-      console.log(response);
       const user_updated = JSON.parse(localStorage.getItem('actualUser') || '[]');
       user_updated.name = this.editForm.value.name;
       user_updated.lastname = this.editForm.value.lastname;
       user_updated.password = this.editForm.value.password;
       localStorage.setItem('actualUser', JSON.stringify(user_updated));
       this.router.navigate(['/ownprofile']);
-    }, (error) => {
-      console.log(error);
-    });
+    }, (error) => {});
 
   }
   
+  /**
+   * Function to change the profile picture and validate it.
+   * @param event 
+   */
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
 
     if (fileInput.files != null) {
       this.selectedFile = fileInput.files[0];
-      console.log(this.selectedFile);
 
       if(this.selectedFile){
         if(!(this.selectedFile.type == 'image/jpg' || this.selectedFile.type == 'image/jpeg' || this.selectedFile.type == 'image/png')){
@@ -101,6 +103,7 @@ export class EditProfileComponent implements OnInit{
         }
     }
     } else {
+      
       // Error message if it is not file selected
       console.error('You need to select a product image.');
     }

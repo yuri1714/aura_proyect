@@ -43,7 +43,7 @@ export class OwnProfileComponent implements OnInit {
     private likeProducts: LikeProductService,
     private likeUser: LikeUserService,
     private chatService: ChatService
-  ) { }
+  ) {}
 
   /**
    * When starting the component,
@@ -62,8 +62,8 @@ export class OwnProfileComponent implements OnInit {
    * Saves the like of the product that the user clicks, but if the user is
    * not logged then it redirects to the login page.
    */
-  saveLikeProduct(id: any) {
-    if (this.heart_color_prod == 'text-gray-500 bg-gray-200') {
+   saveLikeProduct(id: any) {
+    if(this.heart_color_prod == 'text-gray-500 bg-gray-200'){
       this.heart_color_prod = 'text-red-500 bg-red-200';
     } else {
       this.heart_color_prod = 'text-gray-500 bg-gray-200';
@@ -74,10 +74,8 @@ export class OwnProfileComponent implements OnInit {
         id_user: userLogged.id,
         id_product: id,
       };
-      console.log(productLike);
 
       this.likeProducts.addLikeProduct(productLike).subscribe((data) => {
-        console.log('addlike: ' + data);
       });
     } else {
       this.route.navigate(['/login']);
@@ -88,7 +86,7 @@ export class OwnProfileComponent implements OnInit {
    * Function for call likeUsers for service
    */
   saveLikeUser(user_saved: any) {
-    if (this.heart_color == 'text-gray-500 bg-gray-200') {
+    if(this.heart_color == 'text-gray-500 bg-gray-200'){
       this.heart_color = 'text-red-500 bg-red-200';
     } else {
       this.heart_color = 'text-gray-500 bg-gray-200';
@@ -98,7 +96,7 @@ export class OwnProfileComponent implements OnInit {
       user_saved: user_saved,
     };
 
-    this.likeUser.addLikeUser(userLike).subscribe((response) => { });
+    this.likeUser.addLikeUser(userLike).subscribe((response) => {});
   }
 
   /**
@@ -150,27 +148,17 @@ export class OwnProfileComponent implements OnInit {
     this.favUsers = true;
   }
 
-  /**
-   *
-   * @param id Number of the
-   *
-   */
   setUserIds(id: number): void {
     this.id_selected_user = id;
-    console.log('ID SELECTED: ' + this.id_selected_user);
     const userLogged = JSON.parse(localStorage.getItem('actualUser')!);
     this.id_logged_user = userLogged.id;
-    console.log(this.id_logged_user);
     if (this.id_selected_user == this.id_logged_user) {
       this.selected_is_the_same = true;
     } else {
       this.selected_is_the_same = false;
     }
   }
-
-  /**
-   * funcion for validate the user owner id its a similar to selected user
-   */
+  
   getUserOwner(): void {
     const user_id = {
       user_id: this.id_selected_user
@@ -178,17 +166,12 @@ export class OwnProfileComponent implements OnInit {
     this.userService.getUserOwner(user_id).subscribe({
       next: (data: User) => {
         this.selected_user = data;
-        console.log('owner get!');
       },
       error: (err) => {
-        console.log('error: ', err);
       },
     });
   }
 
-  /**
-   * function for only see the owner products
-   */
   getUserProducts(): void {
     this.products.getProducts().subscribe((prod: Product[]) => {
       this.allProducts = prod;
@@ -198,12 +181,8 @@ export class OwnProfileComponent implements OnInit {
         }
       }
     });
-    console.log('tus productos: ' + this.user_products);
   }
 
-  /**
-   * function for only see the owner like products
-   */
   getUserLikeProducts(): void {
     this.likeProducts.getLikeProducts().subscribe((data: any) => {
       this.allLikeProducts = data;
@@ -214,7 +193,7 @@ export class OwnProfileComponent implements OnInit {
           for (let index = 0; index < this.allProducts.length; index++) {
             if (this.allProducts[index].id == id_product) {
               this.user_fav_products.push(this.allProducts[index]);
-
+              
             }
           }
         }
@@ -222,206 +201,148 @@ export class OwnProfileComponent implements OnInit {
     });
   }
 
-  /**
-   * function for only see the owner like products
-   */
   getUserLikeUsers(): void {
     this.likeUser.getLikeUsers().subscribe((data: any) => {
       this.allLikeUsers = data;
       for (let index = 0; index < this.allLikeUsers.length; index++) {
         if (this.allLikeUsers[index].user_clicks == this.id_logged_user) {
-          console.log('usuarios guardados: ' + this.allLikeUsers[index].user_saved);
           const id_saved = {
             user_id: this.allLikeUsers[index].user_saved
           }
           this.userService.getUserOwner(id_saved).subscribe({
             next: (data) => {
               this.user_fav_users.push(data);
-              console.log('liked user saved!');
             },
             error: (err) => {
-              console.log('error: ', err);
             },
           });
         }
       }
-      console.log(this.user_fav_users);
     });
   }
 
-  /**
-   * Function to delete a user to the page and database
-   */
+  // Function to delete a user 
   deleteUsers() {
-    if (confirm('Do you want to delete your account and all your products?')) {
-
+    if(confirm('Do you want to delete your account and all your products?')){
       //Create variable to put the user id
-      const id = {
-        id: this.id_selected_user,
-      };
-      console.log(id);
+    const id = {
+      id: this.id_selected_user,
+    };
 
-      //This For is to delete all the products of the user
-      for (let index = 0; index < this.allProducts.length; index++) {
-        if (this.allProducts[index].user_id == this.id_selected_user) {
-          const id_prod = {
-            id: this.allProducts[index].id,
-          };
-          console.log(id_prod);
-          this.products.deleteProduct(id_prod).subscribe({
-            next: (data) => {
-              console.log('deleteProduct get!');
-            },
-            error: (err) => {
-              console.log('error: ', err);
-            },
-          });
-
-          this.likeProducts.getLikeProducts().subscribe({
-            next: (data) => {
-              this.allLikeProducts = data;
-              console.log('likeProducts get!');
-
-              //Delete like products of user.
-              for (let index = 0; index < this.allLikeProducts.length; index++) {
-                if (this.allLikeProducts[index].id_user == this.id_selected_user || this.allLikeProducts[index].id_product == this.allProducts[index].id) {
-                  const id_likeP = {
-                    id: this.allLikeProducts[index].id,
-                  };
-                  this.likeProducts.deleteLikeProduct(id_likeP).subscribe({
-                    next: (data) => {
-                      console.log('deleteLikeP get!');
-                    },
-                    error: (err) => {
-                      console.log('error: ', err);
-                    },
-                  });
-                }
+    //This For is to delete all the products of the user
+    for (let index = 0; index < this.allProducts.length; index++) {
+      if (this.allProducts[index].user_id == this.id_selected_user) {
+        const id_prod = {
+          id: this.allProducts[index].id,
+        };
+        this.products.deleteProduct(id_prod).subscribe({
+        });
+        
+        this.likeProducts.getLikeProducts().subscribe({
+          next: (data) => {
+            this.allLikeProducts = data;
+            //Delete like products of user.
+            for (let index = 0; index < this.allLikeProducts.length; index++) {
+              if (this.allLikeProducts[index].id_user == this.id_selected_user || this.allLikeProducts[index].id_product == this.allProducts[index].id) {
+                const id_likeP = {
+                  id: this.allLikeProducts[index].id,
+                };
+                this.likeProducts.deleteLikeProduct(id_likeP).subscribe({
+                });
               }
-            },
-            error: (err) => {
-              console.log('error: ', err);
-            },
-          });
-
-        }
-      }
-
-      //Delete the like users of user owner
-      this.likeUser.getLikeUsers().subscribe({
-        next: (data) => {
-          this.allLikeUsers = data;
-          console.log('deleteUser get!');
-
-          for (let index = 0; index < this.allLikeUsers.length; index++) {
-            if (this.allLikeUsers[index].user_clicks == this.id_selected_user || this.allLikeUsers[index].user_saved == this.id_selected_user) {
-              const id_like_user = {
-                id: this.allLikeUsers[index].id,
-              };
-              this.likeUser.deleteLikeUser(id_like_user).subscribe({
-                next: (data) => {
-                  console.log('deleteLikeUser get!');
-                },
-                error: (err) => {
-                  console.log('error: ', err);
-                },
-              });
             }
-          }
-        },
-        error: (err) => {
-          console.log('error: ', err);
-        },
-      });
+          },
+          error: (err) => {},
+        });
 
-      //Function to delete the owner user
-      this.userService.deleteUser(id).subscribe({
-        next: (data) => {
-          console.log('deleteUser get!');
-        },
-        error: (err) => {
-          console.log('error: ', err);
-        },
-      });
-
-      localStorage.setItem('isLoggedIn', 'false');
-      localStorage.removeItem('actualUser');
-      this.route.navigate(['/']);
+      }
     }
 
+    this.likeUser.getLikeUsers().subscribe({
+      next: (data) => {
+        this.allLikeUsers = data;
 
+        for (let index = 0; index < this.allLikeUsers.length; index++) {
+          if (this.allLikeUsers[index].user_clicks == this.id_selected_user || this.allLikeUsers[index].user_saved == this.id_selected_user) {
+            const id_like_user = {
+              id: this.allLikeUsers[index].id,
+            };
+            this.likeUser.deleteLikeUser(id_like_user).subscribe({
+            });
+          }
+        }
+      },
+      error: (err) => {
+      },
+    });
+
+    //Function to delete the user
+    this.userService.deleteUser(id).subscribe({
+    });
+
+    localStorage.setItem('isLoggedIn','false'); 
+    localStorage.removeItem('actualUser');
+    this.route.navigate(['/']);
+    }
+    
+    
   }
 
-  /**
-   * Call the info users of the database
-   */
-  getAllUsers() {
+  getAllUsers(){
     this.userService.getUsersForAdmin().subscribe({
-      next: (data: User[]) => {
+      next: (data: User[]) =>{
         this.allUsers = data;
-        console.log('users get!');
-      }, error: err => {
-        console.log('users: ', err);
+      }, error: err =>{
       }
     });
   }
 
-  /**
-   * Call the chats of the database for view
-   */
-  getAllChats() {
+  getAllChats(){
     this.chatService.getAllChats().subscribe({
-      next: (data) => {
+      next: (data) =>{
         this.allChats = data;
-        console.log('chats get!');
         for (let index = 0; index < this.allChats.length; index++) {
           // Search the logged user in the started chats table
           const chatIndex = index;
-          if (this.allChats[index].id_user1 == JSON.parse(localStorage.getItem('actualUser') || '[]').id) {
+          if(this.allChats[index].user1 == JSON.parse(localStorage.getItem('actualUser') || '[]').id){
             for (let index = 0; index < this.allUsers.length; index++) {
-              if (this.allUsers[index].id == this.allChats[chatIndex].id_user2) {
+              if(this.allUsers[index].id == this.allChats[chatIndex].user2){
                 this.startedChats.push(this.allUsers[index]);
               }
             }
-          } else if (this.allChats[index].id_user2 == JSON.parse(localStorage.getItem('actualUser') || '[]').id) {
+          }else if(this.allChats[index].user2 == JSON.parse(localStorage.getItem('actualUser') || '[]').id){
             for (let index = 0; index < this.allUsers.length; index++) {
-              if (this.allUsers[index].id == this.allChats[chatIndex].id_user1) {
+              if(this.allUsers[index].id == this.allChats[chatIndex].user1){
                 this.startedChats.push(this.allUsers[index]);
               }
             }
           }
-
+    
         }
-      }, error: err => {
-        console.log('chats: ', err);
+      }, error: err =>{
       }
     });
-
+    
   }
 
-  /**
-   * Function for delete you product
-   * @param id_product_selected number of select product
-   */
   deleteProduct(id_product_selected: any) {
-    if (confirm('Do you want to delete this product?')) {
+    if(confirm('Do you want to delete this product?')){
       const id_product = {
         id: id_product_selected,
       };
       this.products.deleteProduct(id_product).subscribe((data) => {
-        console.log(data);
       });
       this.route.navigate(['/ownprofile']);
     }
-
+    
   }
 
   public setAllProfileDataFromUser(id: number): void {
 
     this.setUserIds(id);
     this.getUserOwner();
-    this.getUserProducts();
     this.getUserLikeProducts();
+    this.getUserProducts();
     this.getUserLikeUsers();
     this.getAllUsers();
     this.getAllChats();

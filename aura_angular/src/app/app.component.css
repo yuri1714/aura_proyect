@@ -1,0 +1,25 @@
+  #text_menu {
+  width: auto;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  display:inline-block;
+  transition-property: transform;
+  transition: 0.25s ease;
+  }
+  #text_menu::after {
+    align-self: center;
+    content: '';
+    border-top: 2px solid #80c4f9;
+    width: 100%;
+    position: absolute;
+    display: block;
+    transform: rotateY(90deg);
+    transition:transform 0.25s linear;
+  }
+  #text_menu:hover {
+    transform: scale(1);
+  }
+  #text_menu:hover::after {
+    transform: rotate(0deg);
+  }

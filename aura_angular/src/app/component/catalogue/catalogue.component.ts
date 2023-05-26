@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/service/product.service';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { CategoryFilterPipe } from 'src/app/pipes/category-filter.pipe';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl,FormGroup,} from '@angular/forms';
 import { CategoriesService } from 'src/app/service/categories.service';
 import { Product } from 'src/app/Models/products/products.module';
 
@@ -19,6 +15,7 @@ export class CatalogueComponent implements OnInit {
   priceRange = [0, 5000]; // Inicialize with a default range of price
   allCategories: any;
   page: number = 1; // current page
+  noProducts!: boolean;
 
   constructor(
     private products: ProductService,
@@ -32,10 +29,10 @@ export class CatalogueComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
     // Take all the products from db
-    this.products.getProducts().subscribe((data: any) => {
+    this.products.getProducts().subscribe((data: Product[]) => {
       this.allProducts = data;
-      console.log(this.allProducts);
     });
 
     // Take all the categories from db
@@ -50,6 +47,6 @@ export class CatalogueComponent implements OnInit {
    */
   onPriceRangeChange(priceRange: number[]) {
     this.priceRange = priceRange;
-    console.log(priceRange);
   }
 }
+

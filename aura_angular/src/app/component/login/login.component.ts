@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule  } from '@angular/forms';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -12,10 +11,9 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class LoginComponent implements OnInit{
 
-  constructor(private userService: UserService,
-              private authService: AuthServiceService,
-              private router: Router,
-              private cookies: CookieService){}
+  constructor(private userService: UserService, 
+              private authService: AuthServiceService, 
+              private router: Router){}
 
   // Variable for is logged or not
   loggedUser!: boolean;
@@ -23,11 +21,11 @@ export class LoginComponent implements OnInit{
 
   // LOGIN FORM
   formLogin = new FormGroup({
-    email: new FormControl('alejandro@gmail.com', [
+    email: new FormControl('', [
       Validators.required,
       Validators.email
     ]),
-    password: new FormControl('ssecreet', [
+    password: new FormControl('', [
       Validators.required,
       Validators.minLength(8)
     ])
@@ -52,9 +50,6 @@ export class LoginComponent implements OnInit{
       }else{
         this.error_message = 'Email or password incorrect!';
       }
-
     }, (error) => {});
-
   };
-
 }

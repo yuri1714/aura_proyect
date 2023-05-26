@@ -1,11 +1,18 @@
-<h2 class="text-4xl">Chat</h2>
+<div *ngIf="this.other_user" class=" md:ml-40 flex flex-cols-2 align-middle mb-4">
+  <div>
+    <img [routerLink]="['/profile', this.other_user.id]" class="rounded-full w-16 h-16 md:w-32 md:h-32 ml-6 cursor-pointer" src="{{this.other_user.icon}}">
+  </div>
+  <div>
+    <h2 class="md:text-4xl text-2xl ml-5 mb-5 md:mt-10 mt-4"> Chat with {{this.other_user.name}} {{this.other_user.lastname}}</h2>
+  </div>
+</div>
 <form action="" [formGroup]="formChat">
     <div class="h-screen">
         <div id="scrollContainer" readonly class="border-double border-8 border-sky-950 rounded-xl h-3/5 overflow-y-auto mx-auto w-5/6 pl-5">
             <div *ngFor="let message of ownMessages">
-                <div class="mb-4 flex" [ngClass]="getMessagePosition(message.dest_user)">
+                <div class="mb-4 flex mt-4" [ngClass]="getMessagePosition(message.dest_user)">
                         <img class="w-10 h-10 rounded-full cursor-pointer mt-auto mr-3" [ngClass]="getImgStyle(message.dest_user)" [src]="getIconImg(message.dest_user)" >
-                        <p class="px-10 py-10 border mr-2 py-3 px-4 text-white" [ngClass]="getMessageStyle(message.dest_user)">{{ message.message }}</p>
+                        <p class="border mr-2 py-3 px-4 text-white" [ngClass]="getMessageStyle(message.dest_user)">{{ message.message }}</p>
                 </div>
             </div>
         </div>
@@ -19,32 +26,35 @@
           </span>   
         </div>
             <div class="mr-5 sm:mr-20">
-                <button (click)="send_message()" [ngClass]="getSendBtn()"
-              class="flex items-center justify-center rounded-xl text-white px-4 py-1 flex-shrink-0 mt-6"
-            >
-              <span>Send</span>
-              <span class="ml-2">
-                <svg
-                  class="w-4 h-4 transform rotate-45 -mt-px"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  ></path>
-                </svg>
-              </span>
-            </button>
+              <div (click)="send_message()" [ngClass]="getSendBtn()" 
+              class='button w-24 h-10 rounded-lg cursor-pointer select-none
+              active:translate-y-2  active:[box-shadow:0_0px_0_0_#1b6ff8,0_0px_0_0_#1b70f841]
+              active:border-b-[0px]
+              transition-all duration-150 
+              border-b-[1px]'>
+              <div class="flex items-center justify-center rounded-xl text-white py-2 flex-shrink-0 mt-6">
+                <span>Send</span>
+                        <span class="ml-2">
+                          <svg
+                            class="w-4 h-4 transform rotate-45 -mt-px"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                            ></path>
+                          </svg>
+                        </span>
+              </div>
+            </div>
             </div> 
           </div>
     </div>
-    
-
+  
     
     
 </form>

@@ -16,12 +16,7 @@ export class ConfirmPasswordDirective {
   @Input() param!:any;
 
   constructor() { }
-
-  /**
-   * The function validates if confirm password its similar to password
-   * @param control 
-   * @returns if control it different from param return true. Else return null
-   */
+  // Validate if the passwords are the same.
   validate(control: AbstractControl): ValidationErrors | null {  
     if (control && control.value && control.value != this.param) {
       return {'noMatch': true}

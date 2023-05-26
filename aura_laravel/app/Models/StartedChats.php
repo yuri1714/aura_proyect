@@ -11,7 +11,9 @@ class StartedChats extends Model
 
     protected $fillable = [
         'id',
-        'id_user1',
-        'id_user2',
+        'user1',
+        'user2',
+        'updated_at',
+        'created_at'
     ];
 }

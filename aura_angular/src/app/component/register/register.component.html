@@ -109,7 +109,7 @@
                               <input id="terms" aria-describedby="terms" type="checkbox" formControlName="terms" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300">
                             </div>
                             <div class="ml-3 text-sm">
-                              <label for="terms" class="font-light text-gray-500 ">I accept the <a class="font-medium text-primary-600 hover:underline" href="/terms-conditions">Terms and Conditions</a></label>
+                              <label for="terms" class="font-light text-gray-500 ">I accept the <a class="font-medium text-primary-600 hover:underline">Terms and Conditions</a></label>
                             </div>
                             <span class="text-red-600" *ngIf="this.myform.get('terms')?.errors?.['required'] && this.myform.get('terms')?.touched">
                                 Accept the Terms and Conditions to register.

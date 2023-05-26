@@ -31,15 +31,12 @@ export class AddProductComponent implements OnInit {
 
   //MARKER
   marker!: L.Marker;
-
   //MARKER
+
   public preview!: string;
   public files: any = [];
   public loading!: boolean;
   public allCategories: any;
-  // public google: any;
-
-  // fileToUpload: File = null;
 
   constructor(
     private http: HttpClient,
@@ -47,7 +44,6 @@ export class AddProductComponent implements OnInit {
     private addproduct: ProductService,
     private router: Router
   ) { }
-
 
   formProduct = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -62,6 +58,7 @@ export class AddProductComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
     // create the map
     const map = L.map('map').setView([41.36293574789545, 2.114803791046143], 13);
 
@@ -81,8 +78,6 @@ export class AddProductComponent implements OnInit {
       const latlng = e.target.getLatLng();
       const lat = latlng.lat;
       const lng = latlng.lng;
-
-      console.log(`Latitud: ${lat}, Longitud: ${lng}`);
     });
 
     // It takes all the categories and places them in the variable.
@@ -100,27 +95,27 @@ export class AddProductComponent implements OnInit {
 
     if (fileInput.files != null) {
       this.selectedFile = fileInput.files[0];
-      console.log(this.selectedFile);
-      if (this.selectedFile) {
+      if(this.selectedFile){
         if (!(this.selectedFile.type == 'image/jpg' || this.selectedFile.type == 'image/jpeg' || this.selectedFile.type == 'image/png')) {
           this.validateImgExt = true;
         } else {
           this.validateImgExt = false;
         }
 
-        if (this.selectedFile.size > 2000000) {
+        if(this.selectedFile.size > 10000000){
           this.validateImgSize = true;
         } else {
           this.validateImgSize = false;
         }
 
-        if (this.validateImgExt || this.validateImgSize) {
-          this.formProduct.controls['img'].setErrors({ 'incorrect': true });
-        } else if (!(this.validateImgExt && this.validateImgSize)) {
+        if(this.validateImgExt || this.validateImgSize){
+          this.formProduct.controls['img'].setErrors({'incorrect': true});
+        } else if(!(this.validateImgExt && this.validateImgSize)){
           this.formProduct.controls['img'].setErrors(null);
         }
       }
     } else {
+
       // Error message if it is not file selected
       console.error('You need to select a product image.');
     }
@@ -130,6 +125,7 @@ export class AddProductComponent implements OnInit {
    * Function to add the product to the database
    */
   addProduct() {
+
     // Variable to get the user id
     const id_user = JSON.parse(localStorage.getItem('actualUser')!);
 
@@ -148,18 +144,8 @@ export class AddProductComponent implements OnInit {
     formData.append('lat', this.marker.getLatLng().lat.toString());
     formData.append('lng', this.marker.getLatLng().lng.toString());
     // ------------------------------------------------------------------
-
-    this.addproduct.addProduct(formData).subscribe({
-      next: (data) => {
-        console.log('Product added!');
-      },
-      error: (err) => {
-        console.log('error: ', err);
-      },
-    });
-    this.router.navigate(['/']);
-
+      this.addproduct.addProduct(formData).subscribe({
+      });
+      this.router.navigate(['/']);
   }
-
-
 }
